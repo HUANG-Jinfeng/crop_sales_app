@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1086424594212",
+    "project_id": "philippines-cropsalesapp",
+    "storage_bucket": "philippines-cropsalesapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086424594212:android:8453c4dad319ca754025b1",
+        "android_client_info": {
+          "package_name": "com.example.crop_sales_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086424594212-958orj53qmo89eqcvklt4ehn3j7t9kf6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCPUQWpcZL0V_mj5d4oYAZTTC0AKVuQbO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086424594212-958orj53qmo89eqcvklt4ehn3j7t9kf6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
