@@ -74,7 +74,10 @@ class _CartPageHomeState extends State {
       return CartCropDetial(
           id, name, desc, url, maxcount, quantity, price, isCollect);
     }).toList();
+    print(carts);
     this.carts = carts;
+    print(this.carts);
+    return this.carts;
   }
 
   @override
@@ -92,7 +95,7 @@ class _CartPageHomeState extends State {
           Container(
             color: AppColors.primaryBackground,
             height: MediaQuery.of(context).size.height - 125,
-            child: buildListView(),
+            child: buildListView(carts),
           ),
           CartListBottom(),
         ],
@@ -100,15 +103,18 @@ class _CartPageHomeState extends State {
     );
   }
 
-  buildListView() {
-    if (carts.isEmpty) {
+  buildListView(carts) {
+    //fetchCartCropList();
+    print(carts);
+    if (carts == null) {
+      //return MyLoadingWidget();
       return Empty(
         img: 'assets/images/shopping_cart/empty.png',
         tipText: 'The shopping cart is empty, go shopping!',
         buttonText: 'Go shopping',
         buttonTap: () => MyNavigator.pop(),
       );
-    } else {
+    } else if (carts != null){
       return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return TestListItemWidget(

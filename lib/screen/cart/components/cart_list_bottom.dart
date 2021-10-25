@@ -36,9 +36,9 @@ class CartListBottom extends StatelessWidget {
                     side: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(15))),
                 onPressed: () => {
-                  MyNavigator.popToHome()
+                  MyNavigator.pop(),
                 },
-                splashColor: AppColors.splashColor,
+                splashColor: AppColors.supplierColor2,
                 highlightElevation: 5.0,
                 child: Center(
                   child: Text(
