@@ -1,7 +1,7 @@
 import 'package:crop_sales_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 
-/// appbar 返回按钮类型
+/// appbar
 enum AppBarBackType { Back, Close, None }
 
 const double kNavigationBarHeight = 44.0;
@@ -39,7 +39,7 @@ class MyAppBar extends AppBar implements PreferredSizeWidget {
   get preferredSize => Size.fromHeight(44);
 }
 
-// 自定义返回按钮
+// Back button
 class AppBarBack extends StatelessWidget {
   final AppBarBackType _backType;
   final Color? color;

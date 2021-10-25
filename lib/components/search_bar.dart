@@ -15,11 +15,9 @@ class _SearchBarState extends State<SearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    // 从其他页面传入的搜索关键词，将当前输入框的值绑定为传入的值
     // The search keywords passed in from other pages bind
     // the value of the current input box to the value passed in.
     _textEditController.text = widget.keyword;
-    // 控制输入框光标位置为最后一个字
     // Control the input box cursor position to the last word.
     _textEditController.selection = TextSelection.fromPosition(
       TextPosition(
@@ -56,7 +54,6 @@ class _SearchBarState extends State<SearchBar> {
             ),
           ),
           GestureDetector(
-            /// 将输入值回调传至点击函数
             /// Passes the input value callback to the click function.
             onTap: () => widget.myOntap(_textEditController.text),
             child: Container(

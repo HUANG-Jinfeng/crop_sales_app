@@ -2,13 +2,13 @@ import 'package:crop_sales_app/styles/colors.dart';
 import 'package:flutter/material.dart';
 
 class Empty extends StatelessWidget {
-  /// 图片
+  /// image
   final String img;
-  /// 提示文字
+  /// Tip Text
   final String tipText;
-  /// 按钮文字
+  /// Button Text
   final String buttonText;
-  /// 按钮事件
+  /// Button Events
   final Function buttonTap;
   const Empty({
     Key? key,
@@ -27,8 +27,8 @@ class Empty extends StatelessWidget {
           children: <Widget>[
             Image.asset(
               img,
-              width: 150,
-              height: 150,
+              width: 80,
+              height: 80,
             ),
             SizedBox(
               height: 15,

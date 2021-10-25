@@ -1,9 +1,8 @@
 import 'dart:io';
-import 'package:crop_sales_app/screen/cart/cart_list_page.dart';
+import 'package:crop_sales_app/screen/cart/components/cart_list_page.dart';
 import 'package:crop_sales_app/screen/cart/cart_page_home.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:crop_sales_app/screen/cart/cart_page.dart';
 import 'package:crop_sales_app/screen/cart/store/shopping_cart_global_provider.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 

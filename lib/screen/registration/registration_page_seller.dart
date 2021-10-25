@@ -83,7 +83,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                           child: Column(
                             children: [
                               Text(
-                                'Seller Registration',
+                                'Seller registration',
                                 style: TextStyle(
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
@@ -309,7 +309,7 @@ class _SellerRegisterPageState extends State<SellerRegisterPage> {
                               Container(
                                 padding: EdgeInsets.symmetric(vertical: 30),
                                 child: MyButton(
-                                  text: 'Seller Registration',
+                                  text: 'Seller registration',
                                   handleOk: () => siginup(context, model),
                                 ),
                               ),

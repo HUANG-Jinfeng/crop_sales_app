@@ -1,21 +1,19 @@
+import 'dart:io';
+
 import 'package:crop_sales_app/screen/pay/pay_page.dart';
 import 'package:crop_sales_app/styles/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:tuple/tuple.dart';
-
-//import 'package:crop_sales_app/screen/confirm_order/confirm_order.dart';
-import 'package:crop_sales_app/screen/cart/store/shopping_cart_provider.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 
 class CartListBottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final bottomHeight = MediaQuery.of(context).padding.bottom; //
+    final bottomHeight = MediaQuery.of(context).padding.bottom + (Platform.isAndroid ? 2 : 0); //
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        padding: EdgeInsets.only(bottom: bottomHeight),
+        padding: EdgeInsets.all(bottomHeight),
         decoration: BoxDecoration(
           color: Colors.white,
           border: Border(
@@ -25,18 +23,21 @@ class CartListBottom extends StatelessWidget {
             ),
           ),
         ),
-        height: 80.0 + bottomHeight,
+        height: 55.0 + bottomHeight,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              padding: EdgeInsets.all(10),
+              width: 150,
+              padding: EdgeInsets.all(5),
               decoration: BoxDecoration(),
               child: OutlineButton(
                 shape: RoundedRectangleBorder(
                     side: BorderSide.none,
                     borderRadius: BorderRadius.all(Radius.circular(15))),
-                onPressed: () => {},
+                onPressed: () => {
+                  MyNavigator.popToHome()
+                },
                 splashColor: AppColors.splashColor,
                 highlightElevation: 5.0,
                 child: Center(
@@ -52,7 +53,8 @@ class CartListBottom extends StatelessWidget {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(10),
+              width: 150,
+              padding: EdgeInsets.all(5),
               decoration: BoxDecoration(),
               child: FlatButton(
                 splashColor: AppColors.splashColor,
@@ -63,7 +65,7 @@ class CartListBottom extends StatelessWidget {
                 color: AppColors.primaryColor,
                 child: Center(
                   child: Text(
-                    'Pay immediately',
+                    'Check order',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,

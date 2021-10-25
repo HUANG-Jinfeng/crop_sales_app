@@ -1,12 +1,11 @@
 import 'package:crop_sales_app/components/components.dart';
+import 'package:crop_sales_app/screen/cart/components/cart_list_page.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 import 'package:crop_sales_app/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:crop_sales_app/model/goods.dart';
 import 'package:crop_sales_app/screen/search/store/search_provider.dart';
-import 'package:crop_sales_app/screen/cart/cart_page.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 
 class SearchPage extends StatelessWidget {
@@ -27,7 +26,7 @@ class SearchPage extends StatelessWidget {
               width: duSetWidth(25),
               height: duSetHeight(23.5),
             ),
-            onPressed: () => MyNavigator.push(CartPage()),
+            onPressed: () => MyNavigator.push(CartListPage()),
           ),
         ],
         title: title,
@@ -53,11 +52,6 @@ class _SerachContainerState extends State<SerachContainer> {
     super.initState();
   }
 
-  /// 下方搜索结果列表
-  //Widget _buildresultList(List<GoodsList> resultList) {
-    //return GoodList(goodsList: resultList);
-  //}
-
   @override
   Widget build(BuildContext context) {
     final state = Provider.of<SearchPageProvider>(context);
@@ -69,9 +63,9 @@ class _SerachContainerState extends State<SerachContainer> {
             keyword: keyWord,
             myOntap: (value) {
               setState(() {
-                keyWord = value; // 重新设置当前搜索框的值
+                keyWord = value;
               });
-              state.searchData(keyword: value); // 跳转到Provider进行搜索请求
+              state.searchData(keyword: value);
             },
           ),
           Expanded(
@@ -89,7 +83,7 @@ class _SerachContainerState extends State<SerachContainer> {
                       enablePullUp: true,
                       controller: state.refreshController,
                       onRefresh: () => state.searchData(refresh: true, keyword: ''),
-                      onLoading: () => state.loadData,
+                      //onLoading: () => state.loadData,
                       header: WaterDropHeader(),
                       footer: MyCustomFooter(),
                       //child: ,//输出搜索结果

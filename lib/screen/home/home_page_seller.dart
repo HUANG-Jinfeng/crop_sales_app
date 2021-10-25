@@ -2,22 +2,12 @@ import 'dart:io';
 
 import 'package:crop_sales_app/components/components.dart';
 import 'package:crop_sales_app/screen/crops/crops_list_page.dart';
-import 'package:crop_sales_app/screen/home/components/crops_check.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:crop_sales_app/model/goods.dart';
-import 'package:crop_sales_app/screen/home/components/brand_swiper.dart';
-import 'package:crop_sales_app/screen/home/components/commodity_category.dart';
-import 'package:crop_sales_app/screen/home/components/head_swiper.dart';
 import 'package:crop_sales_app/screen/home/store/home_page_provider.dart';
-import 'package:crop_sales_app/screen/main/components/preload_images.dart';
 import 'package:crop_sales_app/screen/search/search_page.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
-
-import 'components/crops_dispplay_order.dart';
-import 'components/crops_table_list.dart';
 
 class SellerHomePage extends StatefulWidget {
   const SellerHomePage({Key? key}) : super(key: key);

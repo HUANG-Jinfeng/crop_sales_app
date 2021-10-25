@@ -49,7 +49,7 @@ class AddCropModel extends ChangeNotifier {
 
     String? imgURL;
     if (imageFile != null) {
-      // storageにアップロード
+      // storage updata
       final task = await FirebaseStorage.instance
           .ref('crops/${doc.id}')
           .putFile(imageFile!);
@@ -58,7 +58,7 @@ class AddCropModel extends ChangeNotifier {
 
     DateTime now = new DateTime.now();
     // print("当前时间：$now");
-    // firestoreに追加
+    // firestore ni add
     await doc.set(
       {
         'crop_category_id': crop_category_id,

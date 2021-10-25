@@ -22,10 +22,10 @@ class _CropsSelectPageState extends State<CropsSelectPage> {
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(5),
-                topRight: Radius.circular(5),
-                bottomLeft: Radius.circular(5),
-                bottomRight: Radius.circular(5)
+                topLeft: Radius.circular(10),
+                topRight: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+                bottomRight: Radius.circular(10)
               ),
             ),
             child: Row(children: <Widget>[

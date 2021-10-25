@@ -2,13 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/components/my_loading.dart';
 import 'package:crop_sales_app/components/my_toast.dart';
 import 'package:crop_sales_app/screen/cart/components/cart_list_class.dart';
-import 'package:crop_sales_app/screen/login/buyer_login_page.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class BuyerRegisterModel extends ChangeNotifier {
+class SellerRegisterModel extends ChangeNotifier {
   final TelController = TextEditingController();
   final addressController = TextEditingController();
   final categoryIDController = TextEditingController();
@@ -21,7 +20,7 @@ class BuyerRegisterModel extends ChangeNotifier {
 
   String? Tel;
   String? address;
-  String? category_id = '1';
+  String? category_id = '2';
   String? city;
   String? email;
   String? name;
@@ -36,8 +35,8 @@ class BuyerRegisterModel extends ChangeNotifier {
 
   //String? crop_ids;
   String? date;
-  String? total_price = '0';
-  String? total_quantity = '0';
+  String? total_price;
+  String? total_quantity;
 
   bool isLoading = false;
 
@@ -140,6 +139,6 @@ class BuyerRegisterModel extends ChangeNotifier {
         );
       }
     }
-    MyToast.show('Registration was successful!');
+    MyToast.show('registration was successful!');
   }
 }

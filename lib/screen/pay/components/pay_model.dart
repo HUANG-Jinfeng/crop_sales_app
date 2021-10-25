@@ -37,7 +37,7 @@ class PayModel extends ChangeNotifier {
     final data = uid_cartID.data();
     final String uid_cropID = data?['cart_id'];
 
-    final doc = FirebaseFirestore.instance.collection('cart').doc(uid_cropID).collection('crop_ids').doc(id);
+    final doc = FirebaseFirestore.instance.collection('cart').doc(uid_cropID).collection('orders').doc(id);
     await doc.set(
         {
           'id': id,

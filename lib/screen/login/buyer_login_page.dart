@@ -12,7 +12,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 class BuyerLoginPage extends StatefulWidget {
   BuyerLoginPage({Key? key}) : super(key: key);
-
   get auth => null;
 
   @override

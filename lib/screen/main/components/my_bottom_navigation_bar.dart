@@ -34,7 +34,6 @@ class MyBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// 底部tabar 统一设置为 49 + 全面屏底部安全距离
     final bottomBarHeight = 49 + MediaQuery.of(context).padding.bottom + (Platform.isAndroid ? 2 : 0);
     return SizedBox(
       height: bottomBarHeight,

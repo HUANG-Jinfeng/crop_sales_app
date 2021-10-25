@@ -23,16 +23,18 @@ class CartCropDetial {
   CartCropDetial (
       this.crop_id,
       this.crop_name,
+      this.crop_desc,
       this.crop_imageURL,
-      this.crop_minBuyCount,
+      this.crop_maxBuyCount,
       this.single_quantity,
       this.single_price,
       );
 
   String crop_id;
   String crop_name;
+  String crop_desc;
   String crop_imageURL;
-  String crop_minBuyCount;
+  String crop_maxBuyCount;
   int single_quantity;
   String single_price;
 }

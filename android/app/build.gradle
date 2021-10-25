@@ -27,6 +27,10 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 // Add the following line:
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     compileSdkVersion 31
 
@@ -50,6 +54,15 @@ android {
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+    }
+
+    signingConfigs {
+        release {
+            keyAlias 'sign'
+            keyPassword 'android'
+            storeFile file('key/sign.jks')
+            storePassword 'android'
+        }
     }
 
 /*    buildTypes {

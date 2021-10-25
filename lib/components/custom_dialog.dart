@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 
-///自定义Dialog
+///Dialog
 class CustomDialog extends StatefulWidget {
-  //------------------不带图片的dialog------------------------
-  final String? title; //弹窗标题
-  final TextStyle? titleStyle; // 标题样式
-  final Widget? content; //弹窗内容
-  final String? confirmContent; //按钮文本
-  final String? cancelContent; //取消按钮文本
-  final Color? confirmTextColor; //确定按钮文本颜色
-  final bool? isCancel; //是否有取消按钮，默认为true true：有 false：没有
-  final Color? confirmColor; //确定按钮颜色
-  final Color? cancelColor; //取消按钮颜色
-  final Color? cancelTextColor; //取消按钮文本颜色
-  final bool? outsideDismiss; //点击弹窗外部，关闭弹窗，默认为true true：可以关闭 false：不可以关闭
-  final Function? confirmCallback; //点击确定按钮回调
-  final Function? dismissCallback; //弹窗关闭回调
+  //------------------no img dialog------------------------
+  final String? title; //title
+  final TextStyle? titleStyle;
+  final Widget? content;
+  final String? confirmContent;
+  final String? cancelContent;
+  final Color? confirmTextColor;
+  final bool? isCancel;
+  final Color? confirmColor;
+  final Color? cancelColor;
+  final Color? cancelTextColor;
+  final bool? outsideDismiss;
+  final Function? confirmCallback;
+  final Function? dismissCallback;
 
-  //------------------带图片的dialog------------------------
-  final String? image; //dialog添加图片
-  final String? imageHintText; //图片下方的文本提示
+  //------------------with img dialog------------------------
+  final String? image; //dialog img
+  final String? imageHintText; //Text tips below the image
 
   const CustomDialog({
     Key? key,
@@ -48,7 +48,6 @@ class CustomDialog extends StatefulWidget {
 
 class _CustomDialogState extends State<CustomDialog> {
   _confirmDialog() {
-    /// 根据返回的索引做判断
     Navigator.of(context).pop(1);
     Future.delayed(Duration(milliseconds: 250), () {
       if (widget.confirmCallback != null) {
@@ -58,7 +57,6 @@ class _CustomDialogState extends State<CustomDialog> {
   }
 
   _dismissDialog() {
-    /// 根据返回的索引做判断
     Navigator.of(context).pop(0);
     Future.delayed(Duration(milliseconds: 250), () {
       if (widget.dismissCallback != null) {
@@ -75,7 +73,7 @@ class _CustomDialogState extends State<CustomDialog> {
     Column _columnText = Column(
       children: <Widget>[
         SizedBox(height: widget.title == null ? 0 : 15.0),
-        // 头部title
+        // title
         Container(
           height: 60,
           child: Text(
@@ -83,7 +81,7 @@ class _CustomDialogState extends State<CustomDialog> {
             style: widget.titleStyle,
           ),
         ),
-        // 中间内容
+        // Content
         Container(
           height: 100,
           child: Center(
@@ -91,7 +89,7 @@ class _CustomDialogState extends State<CustomDialog> {
           ),
         ),
         SizedBox(height: 0.5, child: Container(color: Color(0xDBDBDBDB))),
-        // 底部按钮
+        // Bottom button
         Container(
           height: 55,
           child: Row(
@@ -163,7 +161,7 @@ class _CustomDialogState extends State<CustomDialog> {
       ],
     );
 
-    /// 路由拦截
+    /// Route Interception
     return WillPopScope(
         child: GestureDetector(
           onTap: () => {widget.outsideDismiss ?? true ? _dismissDialog() : null},

@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:crop_sales_app/components/base_scaffold.dart';
 import 'package:crop_sales_app/components/empty.dart';
 import 'package:crop_sales_app/components/my_loading.dart';
-import 'package:crop_sales_app/screen/crops/components/add_crop_page.dart';
+import 'package:crop_sales_app/screen/crops/components/crop_add_page.dart';
 import 'package:crop_sales_app/screen/crops/components/crop_class.dart';
 import 'package:crop_sales_app/screen/crops/components/crops_list_model.dart';
 import 'package:crop_sales_app/styles/colors.dart';
@@ -10,8 +10,8 @@ import 'package:crop_sales_app/utils/my_navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'components/cart_list_class.dart';
-import 'components/cart_list_model.dart';
+import 'cart_list_class.dart';
+import 'cart_list_model.dart';
 
 class CartListPage extends StatelessWidget {
   const CartListPage({Key? key}) : super(key: key);

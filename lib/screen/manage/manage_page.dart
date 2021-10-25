@@ -1,6 +1,6 @@
 import 'package:crop_sales_app/components/components.dart';
-import 'package:crop_sales_app/screen/cart/cart_list_page.dart';
-import 'package:crop_sales_app/screen/crops/components/add_crop_page.dart';
+import 'package:crop_sales_app/screen/cart/components/cart_list_page.dart';
+import 'package:crop_sales_app/screen/crops/components/crop_add_page.dart';
 
 import 'package:crop_sales_app/screen/main/initial_page.dart';
 import 'package:crop_sales_app/screen/manage/components/manage_page_model.dart';

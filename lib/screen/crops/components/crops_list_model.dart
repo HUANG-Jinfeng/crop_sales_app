@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:crop_sales_app/components/my_toast.dart';
 import 'package:crop_sales_app/screen/crops/components/crop_class.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -31,64 +33,114 @@ class CropListModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future addCropToCart(id,name,url,price,quantity,total) async {
-    final uid_cartID =
-    await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+  Future<int> doesNameAlreadyExist(String id) async {
+    final uID = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    final data = uID.data();
+    final String uid_cartID = data?['cart_id'];
+    int check = 0;
+
+    /*FirebaseFirestore.instance
+        .collection('cart')
+        .doc(uid_cartID)
+        .collection('crop_ids')
+        .doc(id)
+        .get()
+        .then(
+      (DocumentSnapshot documentSnapshot) {
+        if (documentSnapshot.exists) {
+          print('Document exists on the database');
+        } else {
+          print('Document not exists on the database');
+        }
+      },
+    );*/
+
+    final result =
+    await FirebaseFirestore.instance
+        .collection('cart')
+        .doc(uid_cartID)
+        .collection('crop_ids')
+        .doc(id)
+        .get();
+    if (result.exists) {
+      check = 1;
+    }else{
+      check = -1;
+    }
+    //print(check);
+    return check;
+  }
+
+  Future addCropToCart(
+      id, name, description, url, price, quantity, total) async {
+    final uid_cartID = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
     final data = uid_cartID.data();
     final String uid_cropID = data?['cart_id'];
 
     //quantity = quantity+2;
-    final doc = FirebaseFirestore.instance.collection('cart').doc(uid_cropID).collection('crop_ids').doc(id);
-    await doc.set(
-      {
-        'id': id,
-        'name': name,
-        'url': url,
-        'price': price,
-        'quantity': quantity,
-        'minBuyCount': total,
-      }
-    );
-
-/*    await FirebaseFirestore.instance.collection('cart').doc(uid_cropID).update({
-      'total_price': price,
-      'total_quantity': quantity,
-    });*/
-
-    //print(uid_cropID); //获取用户ID下的专属购物车ID
-    // print("当前时间：$now");
-    // firestoreに追加
+    final doc = FirebaseFirestore.instance
+        .collection('cart')
+        .doc(uid_cropID)
+        .collection('crop_ids')
+        .doc(id);
+    await doc.set({
+      'id': id,
+      'name': name,
+      'description': description,
+      'url': url,
+      'price': price,
+      'quantity': quantity,
+      'maxBuyCount': total,
+      'isCollect': true,
+    });
 
     MyToast.show('Added to cart!');
   }
 
   String? PRICE;
   String? QUANTITY;
-  Future addTotalPrice(price,_counter) async {
-    final uid_cartID =
-    await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+
+  Future addTotalPrice(id, price, _counter) async {
+    final uid_cartID = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
     final data = uid_cartID.data();
     final String uid_cropID = data?['cart_id'];
 
-    final totalPrice =
-    await FirebaseFirestore.instance.collection('cart').doc(uid_cropID).get();
+    final totalPrice = await FirebaseFirestore.instance
+        .collection('cart')
+        .doc(uid_cropID)
+        .get();
     final cartdata = totalPrice.data();
     PRICE = cartdata?['total_price']; //print(PRICE);
     QUANTITY = cartdata?['total_quantity']; //print(QUANTITY);
 
     var a = int.parse(PRICE!);
     num b = int.parse(QUANTITY!);
-    if (a == 0){
+    if (a == 0) {
       a = int.parse(price);
       b = _counter;
-      await FirebaseFirestore.instance.collection('cart').doc(uid_cropID).update({
+      await FirebaseFirestore.instance
+          .collection('cart')
+          .doc(uid_cropID)
+          .update({
         'total_price': a.toString(),
         'total_quantity': b.toString(),
       });
-    }else{
+    } else {
       a = a + int.parse(price);
       b = b + _counter;
-      await FirebaseFirestore.instance.collection('cart').doc(uid_cropID).update({
+      await FirebaseFirestore.instance
+          .collection('cart')
+          .doc(uid_cropID)
+          .update({
         'total_price': a.toString(),
         'total_quantity': b.toString(),
       });
