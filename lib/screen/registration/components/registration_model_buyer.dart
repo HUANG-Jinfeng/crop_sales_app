@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 class BuyerRegisterModel extends ChangeNotifier {
   final TelController = TextEditingController();
   final addressController = TextEditingController();
-  final categoryIDController = TextEditingController();
   final cityController = TextEditingController();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -21,7 +20,7 @@ class BuyerRegisterModel extends ChangeNotifier {
 
   String? Tel;
   String? address;
-  String? category_id = '1';
+  String? category_id = '2';
   String? city;
   String? email;
   String? name;
@@ -62,7 +61,6 @@ class BuyerRegisterModel extends ChangeNotifier {
   }
 
   void setCategory_id(String category_id) {
-    category_id = '1';
     this.category_id = category_id;
     notifyListeners();
   }
@@ -95,7 +93,7 @@ class BuyerRegisterModel extends ChangeNotifier {
   Future signUp() async {
     this.Tel = TelController.text;
     this.address = addressController.text;
-    this.category_id = categoryIDController.text;
+    this.category_id = '2';
     this.city = cityController.text;
     this.email = emailController.text;
     this.name = nameController.text;

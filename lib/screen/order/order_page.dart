@@ -15,7 +15,7 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
-  List tabs = ["All", "Paying", "Delivering", "Finished"];
+  List tabs = ["All"];
 
   @override
   void initState() {
@@ -59,7 +59,6 @@ class OrderPageContainer extends StatelessWidget {
 
     return Column(
       children: <Widget>[
-        _buildTab(),
         Expanded(
           child: Container(
             color: Color(0xFFF7F7F7),

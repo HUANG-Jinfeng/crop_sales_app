@@ -40,9 +40,9 @@ class AppBarShopCartIconButton extends StatelessWidget {
       ),
       //onPressed: () => MyNavigator.push(CartListPage()),
       //onPressed: () => MyNavigator.push(CartPage()),
-      //onPressed: () => Navigator.push(context,
-      //           MaterialPageRoute(builder: (context) => CartPageHome())),
-      onPressed: () => MyNavigator.push(CartPageHome()),
+      onPressed: () => Navigator.push(context,
+                 MaterialPageRoute(builder: (context) => CartPageHome())),
+      //onPressed: () => MyNavigator.push(CartPageHome()),
     );
   }
 

@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:crop_sales_app/components/components.dart';
-import 'package:crop_sales_app/screen/crops/crops_list_page.dart';
+import 'package:crop_sales_app/screen/crops/seller_crops_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crop_sales_app/screen/home/store/home_page_provider.dart';
@@ -74,14 +74,11 @@ class _HomePageContainerState extends State<HomePageContainer> {
                 children: <Widget>[
                   Container(
                     height: 44,
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 15),
+                    margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
                     padding: EdgeInsets.only(left: 15),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(5),
-                        topRight: Radius.circular(5),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
                     child: LeftTitle(
                       tipColor: AppColors.primaryColor,
@@ -89,11 +86,10 @@ class _HomePageContainerState extends State<HomePageContainer> {
                     ),
                   ),
                   Container(
-                    height: size.height - kNavigationBarHeight - 50 - 44 - 44 - 30 - 44 - 49,
-                    color: Colors.white,
+                    height: size.height - kNavigationBarHeight - 190,
                     margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-                    padding: EdgeInsets.only(bottom: 10),
-                    child: CropListPage(),
+                    //padding: EdgeInsets.only(bottom: 10),
+                    child: SellerCropListPage(),
                   ),
                 ],
               ),

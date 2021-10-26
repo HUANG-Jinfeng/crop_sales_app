@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/screen//login/seller_login_page.dart';
-import 'package:crop_sales_app/screen//main/initial_page.dart';
+import 'package:crop_sales_app/screen/main/initial_page.dart';
 import 'package:crop_sales_app/screen/main/main_page_seller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,6 +21,14 @@ Future<void> main() async {
   // InitializeAPP These two lines
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
+  final uID = await FirebaseFirestore.instance
+      .collection('users')
+      .doc(FirebaseAuth.instance.currentUser!.uid)
+      .get();
+  final data = uID.data();
+  final String userType = data?['category_id'];
+
   // Determines if you are logged in.
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLogin = prefs.getBool('isLogin') ?? false;
@@ -29,9 +39,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (_) => MainProvider()),
         ChangeNotifierProvider(create: (_) => ShopingCartGlobalProvider()),
       ],
-      child: MyApp(
-        isLogin: isLogin,
-      ),
+      child: userType=='2' ? MyAppForBuyer(isLogin: isLogin,) : MyAppForSeller(isLogin: isLogin,),
     ),
   );
   //
@@ -42,9 +50,9 @@ Future<void> main() async {
   }
 }
 
-class MyApp extends StatelessWidget {
+class MyAppForBuyer extends StatelessWidget {
   final isLogin;
-  const MyApp({Key? key, this.isLogin}) : super(key: key);
+  const MyAppForBuyer({Key? key, this.isLogin}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -53,14 +61,14 @@ class MyApp extends StatelessWidget {
       child: RefreshConfiguration(
         child: MaterialApp(
           title: 'LTID',
-          localizationsDelegates: [
+          localizationsDelegates: const [
             RefreshLocalizations.delegate,
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: [
-            const Locale('en'),
-            const Locale('jp'),
+          supportedLocales: const [
+            Locale('en'),
+            Locale('jp'),
           ],
           localeResolutionCallback:
               (Locale? locale, Iterable<Locale> supportedLocales) {
@@ -73,6 +81,42 @@ class MyApp extends StatelessWidget {
           ),
           debugShowCheckedModeBanner: false,
           home: isLogin ? BuyerMainPage() : InitialPage(),
+        ),
+      ),
+    );
+  }
+}
+class MyAppForSeller extends StatelessWidget {
+  final isLogin;
+  const MyAppForSeller({Key? key, this.isLogin}) : super(key: key);
+
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return OKToast(
+      child: RefreshConfiguration(
+        child: MaterialApp(
+          title: 'LTID',
+          localizationsDelegates: const [
+            RefreshLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('jp'),
+          ],
+          localeResolutionCallback:
+              (Locale? locale, Iterable<Locale> supportedLocales) {
+            return locale;
+          },
+          theme: ThemeData(
+            primarySwatch: Colors.purple,
+            primaryColor: AppColors.primaryColor,
+            accentColor: AppColors.primaryColorAccent,
+          ),
+          debugShowCheckedModeBanner: false,
+          home: isLogin ? SellerMainPage() : InitialPage(),
         ),
       ),
     );

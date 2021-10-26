@@ -68,6 +68,7 @@ class _BuyerLoginFormState extends State<BuyerLoginPage> {
         );
       }
     } catch (e) {
+      Navigator.pop(context);
       print('Error: $e');
     } finally {
     }
@@ -290,9 +291,7 @@ class _BuyerLoginFormState extends State<BuyerLoginPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                //RegistrationPage()
-                                BuyerRegisterPage(),
+                                builder: (context) => BuyerRegisterPage(),
                               ),
                             );
                           },

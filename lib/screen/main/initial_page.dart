@@ -7,8 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InitialPage extends StatefulWidget {
-  InitialPage({Key? key}) : super(key: key);
-
   @override
   _InitialFormState createState() => _InitialFormState();
 }
@@ -87,18 +85,17 @@ class _InitialFormState extends State<InitialPage> {
                 SizedBox(
                   height: 100,
                 ),
-                // 登录按钮
-                /*Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: MyButton(
-                    text: 'Seller Login', //元登录按键
-                    handleOk: () => _LoginPage(context, 1),
-                  ),
-                ),*/
                 Container(
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: MyButton(
-                    text: 'Buyer Login', //元登录按键
+                    text: 'Seller Login',
+                    handleOk: () => _LoginPage(context, 1),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 10),
+                  child: MyButton(
+                    text: 'Buyer Login',
                     handleOk: () => _LoginPage(context, 2),
                   ),
                 ),

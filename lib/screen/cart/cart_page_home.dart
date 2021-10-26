@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/components/components.dart';
+import 'package:crop_sales_app/screen/cart/components/cart_list_page.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 
 import 'components/cart_list_bottom.dart';
+import 'components/check_button.dart';
 import 'components/count_text.dart';
 
 class CartCropDetial {
@@ -42,6 +44,7 @@ class CartPageHome extends StatefulWidget {
 class _CartPageHomeState extends State {
   ///测试数据集合
   List<CartCropDetial> carts = [];
+  bool _isButtonEdit = false;
 
   @override
   Future fetchCartCropList() async {
@@ -51,7 +54,7 @@ class _CartPageHomeState extends State {
         .get();
     final data = uID.data();
     final String uid_cartID = data?['cart_id'];
-    print(uid_cartID);
+    //print(uid_cartID);
 
     final QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('cart')
@@ -74,28 +77,53 @@ class _CartPageHomeState extends State {
       return CartCropDetial(
           id, name, desc, url, maxcount, quantity, price, isCollect);
     }).toList();
-    print(carts);
+    //print(carts);
     this.carts = carts;
-    print(this.carts);
-    return this.carts;
+    //print(this.carts);
+    return carts;
   }
 
   @override
   void initState() {
     super.initState();
     fetchCartCropList();
+    //print(carts);//null
   }
 
   @override
   Widget build(BuildContext context) {
     return BaseScaffold(
       title: 'My Cart',
+      actions: <Widget>[
+        //AppBarShopCartIconButton()
+        FlatButton(
+          color: _isButtonEdit ? Colors.white : Colors.white,
+          //splashColor: Colors.transparent,
+          onPressed: () {
+            setState(
+              () {
+                _isButtonEdit = !_isButtonEdit;
+                if (_isButtonEdit == true) {
+                  MyToast.show('You can edit your own shopping list!');
+                } else {
+                  MyToast.show('You have confirmed your order!');
+                }
+              },
+            );
+          },
+          child: Text(
+            "${_isButtonEdit == true ? 'OK' : 'Edit'}",
+            style: TextStyle(
+                color: _isButtonEdit ? Colors.white : AppColors.priceColor),
+          ),
+        ),
+      ],
       body: Column(
         children: <Widget>[
           Container(
             color: AppColors.primaryBackground,
             height: MediaQuery.of(context).size.height - 125,
-            child: buildListView(carts),
+            child: buildListView(),
           ),
           CartListBottom(),
         ],
@@ -103,22 +131,23 @@ class _CartPageHomeState extends State {
     );
   }
 
-  buildListView(carts) {
+  buildListView() {
     //fetchCartCropList();
-    print(carts);
-    if (carts == null) {
+    //print(carts);
+    if (carts.isEmpty) {
       //return MyLoadingWidget();
+      return CartListPage();
       return Empty(
         img: 'assets/images/shopping_cart/empty.png',
         tipText: 'The shopping cart is empty, go shopping!',
         buttonText: 'Go shopping',
         buttonTap: () => MyNavigator.pop(),
       );
-    } else if (carts != null){
+    } else if (carts.isNotEmpty) {
       return ListView.builder(
         itemBuilder: (BuildContext context, int index) {
           return TestListItemWidget(
-            cart: carts[index],
+            crops: carts[index],
             key: GlobalObjectKey(index),
           );
         },
@@ -129,9 +158,9 @@ class _CartPageHomeState extends State {
 }
 
 class TestListItemWidget extends StatefulWidget {
-  final CartCropDetial cart;
+  final CartCropDetial crops;
 
-  TestListItemWidget({required this.cart, Key? key}) : super(key: key);
+  TestListItemWidget({required this.crops, Key? key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -156,7 +185,7 @@ class _ListItemState extends State<TestListItemWidget> {
   Column buildColumn() {
     final topWidth = MediaQuery.of(context).size.width;
     GlobalKey<TextWidgetState> textKey = GlobalKey();
-    var _count = widget.cart.single_quantity;
+    var _count = widget.crops.single_quantity;
 
     return Column(
       children: <Widget>[
@@ -177,7 +206,7 @@ class _ListItemState extends State<TestListItemWidget> {
                   alignment: Alignment.center,
                   placeholder: (_, __) =>
                       Image.asset('assets/images/order/jiazaizhong.png'),
-                  imageUrl: widget.cart.crop_imageURL,
+                  imageUrl: widget.crops.crop_imageURL,
                   height: 60,
                   width: 60,
                 ),
@@ -190,7 +219,7 @@ class _ListItemState extends State<TestListItemWidget> {
                     Container(
                       width: (topWidth - 236),
                       child: Text(
-                        widget.cart.crop_name,
+                        widget.crops.crop_name,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -207,7 +236,7 @@ class _ListItemState extends State<TestListItemWidget> {
                     Container(
                       width: (topWidth - 236),
                       child: Text(
-                        widget.cart.crop_desc,
+                        widget.crops.crop_desc,
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: TextStyle(
@@ -233,7 +262,7 @@ class _ListItemState extends State<TestListItemWidget> {
                           ),
                           children: <TextSpan>[
                             TextSpan(
-                              text: widget.cart.crop_maxBuyCount,
+                              text: widget.crops.crop_maxBuyCount,
                               style: TextStyle(
                                 color: Color(0xFF121212),
                                 fontSize: 12,
@@ -278,7 +307,7 @@ class _ListItemState extends State<TestListItemWidget> {
                           ),
                           children: [
                             TextSpan(
-                              text: widget.cart.single_price.toString(),
+                              text: widget.crops.single_price.toString(),
                               style: TextStyle(
                                 color: AppColors.priceColor,
                                 fontSize: 16,
@@ -305,18 +334,16 @@ class _ListItemState extends State<TestListItemWidget> {
                             onPressed: () {
                               if (_count <= 1) {
                                 _count--;
-                                deleteCrop(widget.cart.crop_id);
+                                deleteCrop(widget.crops.crop_id);
                                 MyToast.show('Delete!');
                               } else {
                                 _count--;
                                 textKey.currentState!.onPressed(_count);
-                                var totalPrice = int.parse(
-                                    widget.cart.single_price) *
-                                    _count;
+                                var totalPrice =
+                                    int.parse(widget.crops.single_price) *
+                                        _count;
                                 eachCropTotalQuantityAndPrice(
-                                    widget.cart.crop_id,
-                                    _count,
-                                    totalPrice);
+                                    widget.crops.crop_id, _count, totalPrice);
                               }
                             },
                             color: Colors.deepOrange,
@@ -330,20 +357,17 @@ class _ListItemState extends State<TestListItemWidget> {
                             iconSize: 20,
                             onPressed: () {
                               if (_count ==
-                                  int.parse(widget.cart.crop_maxBuyCount)) {
-                                MyToast.show(
-                                    'Already the largest inventory!');
+                                  int.parse(widget.crops.crop_maxBuyCount)) {
+                                MyToast.show('Already the largest inventory!');
                               } else if (_count <
-                                  int.parse(widget.cart.crop_maxBuyCount)) {
+                                  int.parse(widget.crops.crop_maxBuyCount)) {
                                 _count++;
                                 textKey.currentState!.onPressed(_count);
-                                var totalPrice = int.parse(
-                                    widget.cart.single_price) *
-                                    _count;
+                                var totalPrice =
+                                    int.parse(widget.crops.single_price) *
+                                        _count;
                                 eachCropTotalQuantityAndPrice(
-                                    widget.cart.crop_id,
-                                    _count,
-                                    totalPrice);
+                                    widget.crops.crop_id, _count, totalPrice);
                               } else {}
                             },
                             color: Colors.deepOrange,
@@ -365,20 +389,20 @@ class _ListItemState extends State<TestListItemWidget> {
     );
   }
 
-  Future deleteCrop(crop_id) async {
+  Future deleteCrop(cropID) async {
     final uID = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     final data = uID.data();
     final String uid_cartID = data?['cart_id'];
-    print(uid_cartID);
+    print('Corp is deleted! ID: $cropID');
     // firestore delete
     await FirebaseFirestore.instance
         .collection('cart')
         .doc(uid_cartID)
         .collection('crop_ids')
-        .doc(crop_id)
+        .doc(cropID)
         .delete();
   }
 
@@ -389,7 +413,10 @@ class _ListItemState extends State<TestListItemWidget> {
         .get();
     final data = uID.data();
     final String uid_cartID = data?['cart_id'];
-    //print(cropID);
+    print('Corp is updata!');
+    print('ID: $cropID');
+    print('No. $count');
+    print('TotalPrice: $totalPrice');
     //print(totalPrice);
 
     await FirebaseFirestore.instance

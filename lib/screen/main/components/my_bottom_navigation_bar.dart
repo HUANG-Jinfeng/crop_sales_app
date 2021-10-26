@@ -10,11 +10,6 @@ const List<Map<String, String>> _tabBarData = [
     "image": "assets/images/tabbar/zhuye_off.png",
     "selectedImage": "assets/images/tabbar/zhuye_ON.png",
   },
-/*  {
-    "title": "Corps",
-    "image": "assets/images/tabbar/fenlei_off.png",
-    "selectedImage": "assets/images/tabbar/fenlei_ON.png",
-  },*/
   {
     "title": "Order",
     "image": "assets/images/tabbar/dingdan_off.png",

@@ -1,5 +1,5 @@
 import 'package:crop_sales_app/screen/main/components/my_bottom_navigation_bar.dart';
-import 'package:crop_sales_app/screen/manage/manage_page.dart';
+import 'package:crop_sales_app/screen/manage/buyer_manage_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -44,7 +44,7 @@ class _BuyerMainPageState extends State<BuyerMainPage> with AutomaticKeepAliveCl
         }),
         body: PageView(
           controller: mainState.tabBarPageController,
-          children: <Widget>[BuyerHomePage(), /*CategoryPage(),*/ OrderPage(), ManagePage()],
+          children: <Widget>[BuyerHomePage(), OrderPage(), BuyerManagePage()],
           physics: NeverScrollableScrollPhysics(),
         ),
       ),

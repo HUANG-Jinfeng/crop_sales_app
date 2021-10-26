@@ -1,4 +1,5 @@
 import 'package:crop_sales_app/components/components.dart';
+import 'package:crop_sales_app/screen/home/home_page_buyer.dart';
 import 'package:crop_sales_app/screen/main/store/main_provider.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
@@ -12,7 +13,6 @@ class PayPage extends StatelessWidget {
 
   const PayPage({Key? key, required this.orderId}) : super(key: key);
 
-  /// 取消订单对话框
   Future<bool> _showCancelDialog(BuildContext context) async {
     final result = await showDialog<int>(
         context: context,
@@ -40,7 +40,6 @@ class PayPage extends StatelessWidget {
             isCancel: true,
           );
         });
-
     return result == 0;
   }
 
@@ -129,7 +128,7 @@ class PayPageContainer extends StatelessWidget {
             },
             dismissCallback: () {
               // continue to shoping
-              MyNavigator.popToHome();
+              MyNavigator.pushAndRemove(BuyerHomePage());
             },
           );
         }

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 
-import '../manage_page.dart';
+import '../buyer_manage_page.dart';
 
 class BuyerAccountInfo extends StatefulWidget {
   const BuyerAccountInfo({Key? key}) : super(key: key);

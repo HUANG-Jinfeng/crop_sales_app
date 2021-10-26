@@ -1,10 +1,9 @@
 import 'package:crop_sales_app/screen/home/home_page_seller.dart';
 import 'package:crop_sales_app/screen/main/components/my_bottom_navigation_bar.dart';
-import 'package:crop_sales_app/screen/manage/manage_page.dart';
+import 'package:crop_sales_app/screen/manage/seller_manage_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-//import 'package:crop_sales_app/screen/category/category_page.dart';
 import 'package:crop_sales_app/screen/order/order_page.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 import 'store/main_provider.dart';
@@ -44,7 +43,7 @@ class _SellerMainPageState extends State<SellerMainPage> with AutomaticKeepAlive
         }),
         body: PageView(
           controller: mainState.tabBarPageController,
-          children: <Widget>[SellerHomePage(), /*CategoryPage(),*/ OrderPage(), ManagePage()],
+          children: <Widget>[SellerHomePage(), OrderPage(), SellerManagePage()],
           physics: NeverScrollableScrollPhysics(),
         ),
       ),

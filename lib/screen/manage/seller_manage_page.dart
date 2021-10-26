@@ -14,10 +14,10 @@ import 'package:provider/provider.dart';
 import 'components/manage_address.dart';
 import 'components/manage_profile_detail.dart';
 
-class ManagePage extends StatelessWidget {
+class SellerManagePage extends StatelessWidget {
   final String? supplierId;
 
-  const ManagePage({Key? key, this.supplierId}) : super(key: key);
+  const SellerManagePage({Key? key, this.supplierId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class ManagePage extends StatelessWidget {
                   children: <Widget>[
                     _buildTop(context),
                     _buildFunc(context),
-                    _buildMoreFunc(context),
+                    //_buildMoreFunc(context),
                   ],
                 ),
               ),
@@ -45,7 +45,6 @@ class ManagePage extends StatelessWidget {
     );
   }
 
-  /// 上方
   Widget _buildTop(BuildContext context) {
     return Consumer<MyManageModel>(builder: (context, model, child) {
       return Container(
@@ -53,9 +52,8 @@ class ManagePage extends StatelessWidget {
             left: 20, top: MediaQuery.of(context).padding.top + 50),
         height: 300,
         width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            //背景径向渐变
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [AppColors.supplierColor2, AppColors.supplierColor1],
@@ -92,7 +90,7 @@ class ManagePage extends StatelessWidget {
                       children: <Widget>[
                         Text(
                           model.name ?? 'No name',
-                          style: TextStyle(
+                          style: const TextStyle(
                               color: Colors.white,
                               fontSize: 22,
                               fontWeight: FontWeight.w600),
@@ -100,19 +98,19 @@ class ManagePage extends StatelessWidget {
                         /*Text('ID: ${model.uid}' ?? 'null',
                             style:
                                 TextStyle(color: Colors.white, fontSize: 12)),*/
-                        Divider(height: 8),
+                        const Divider(height: 8),
                         Text(
                             'Tel: ${model.Tel}',
                             style:
-                                TextStyle(color: Colors.white, fontSize: 12)),
+                                const TextStyle(color: Colors.white, fontSize: 12)),
                         //Divider(height: 5),
                         Text('Email: ${model.email}',
                             style:
-                                TextStyle(color: Colors.white, fontSize: 12)),
+                                const TextStyle(color: Colors.white, fontSize: 12)),
                         //Divider(height: 5),
                         Text('City: ${model.city}',
                             style:
-                                TextStyle(color: Colors.white, fontSize: 12)),
+                                const TextStyle(color: Colors.white, fontSize: 12)),
                       ],
                     ),
                   )
@@ -126,53 +124,26 @@ class ManagePage extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(0, 6, 10, 6),
                 icon: Container(
                   child: Stack(
-                    children: <Widget>[
+                    children: const <Widget>[
                       Center(
                         child: Icon(
                           Icons.settings_outlined,
                           color: Colors.white,
                         ),
-                        /*child: Image.asset(
-                            'assets/images/manage/guanli_ON.png',
-                            width: 22, height: 22,
-                        ),*/
                       ),
                     ],
                   ),
                 ),
                 onPressed: () => MyNavigator.push(BuyerAccountInfo()),
-                //onPressed: () => MyNavigator.push(CropListPage()),
-                //onPressed: () => MyNavigator.push(RegisterPage()),
-                //onPressed: () => MyNavigator.push(CartListPage()),
               ),
             ),
-            /*Container(
-              //width: 40,
-              height: 90,
-              child: IconButton(
-                padding: const EdgeInsets.fromLTRB(0, 6, 10, 6),
-                icon: Container(
-                  child: Stack(
-                    children: <Widget>[
-                      Center(
-                        child: Image.asset(
-                            'assets/images/manage/guanli_ON.png',
-                            width: 22, height: 22,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                onPressed: () => MyNavigator.push(BuyerAccountInfo()),
-              ),
-            ),*/
           ],
         ),
       );
     });
   }
 
-  /// 我的功能
+  /// My functional
   Widget _buildFunc(BuildContext context) {
     return Consumer<MyManageModel>(builder: (context, model, child) {
       return Container(
@@ -187,11 +158,11 @@ class ManagePage extends StatelessWidget {
           children: <Widget>[
             Container(
               padding: EdgeInsets.only(top: 10, bottom: 10),
-              child: LeftTitle(
+              child: const LeftTitle(
                 title: 'My Function',
               ),
             ),
-            MyDivider(),
+            const MyDivider(),
             Container(
               padding: EdgeInsets.only(left: 10, right: 10, top: 10),
               child: Row(
@@ -199,9 +170,9 @@ class ManagePage extends StatelessWidget {
                 children: <Widget>[
                   Column(
                     children: <Widget>[
-                      new FloatingActionButton(
+                      FloatingActionButton(
                         onPressed: () => MyNavigator.push(OrderPage()),
-                        child: Icon(
+                        child: const Icon(
                           Icons.assignment,
                           color: Color(0xFF4A4A4A),
                           size: 28,
@@ -212,7 +183,7 @@ class ManagePage extends StatelessWidget {
                         splashColor: AppColors.primaryColor,
                         mini: true,
                       ),
-                      Text(
+                      const Text(
                         'Order',
                         style: TextStyle(
                             color: AppColors.primaryText, fontSize: 12),
@@ -222,9 +193,12 @@ class ManagePage extends StatelessWidget {
                   Column(
                     children: <Widget>[
                       FloatingActionButton(
-                        onPressed: () => MyNavigator.push(AddressBuyer()),
-                        child: Icon(
-                          Icons.location_city,
+                        onPressed: () async {
+                          // add crops
+                          MyNavigator.push(AddCropPage());
+                        },
+                        child: const Icon(
+                          Icons.add_business,
                           color: Color(0xFF4A4A4A),
                           size: 28,
                         ),
@@ -234,18 +208,18 @@ class ManagePage extends StatelessWidget {
                         splashColor: AppColors.primaryColor,
                         mini: true,
                       ),
-                      Text(
-                        'Address',
+                      const Text(
+                        'Add Crops',
                         style: TextStyle(
                             color: AppColors.primaryText, fontSize: 12),
-                      )
+                      ),
                     ],
                   ),
                   Column(
                     children: <Widget>[
-                      new FloatingActionButton(
+                      FloatingActionButton(
                         onPressed: () {},
-                        child: Icon(
+                        child: const Icon(
                           Icons.payment,
                           color: Color(0xFF4A4A4A),
                           size: 28,
@@ -256,7 +230,7 @@ class ManagePage extends StatelessWidget {
                         splashColor: AppColors.primaryColor,
                         mini: true,
                       ),
-                      Text(
+                      const Text(
                         'PayWay',
                         style: TextStyle(
                             color: AppColors.primaryText, fontSize: 12),
@@ -265,13 +239,13 @@ class ManagePage extends StatelessWidget {
                   ),
                   Column(
                     children: <Widget>[
-                      new FloatingActionButton(
+                      FloatingActionButton(
                         onPressed: () async {
-                          // ログアウト
+                          // logout
                           await model.logout();
                           MyNavigator.pushAndRemove(InitialPage());
                         },
-                        child: Icon(
+                        child: const Icon(
                           Icons.logout,
                           color: Color(0xFF4A4A4A),
                           size: 28,
@@ -282,7 +256,7 @@ class ManagePage extends StatelessWidget {
                         splashColor: AppColors.primaryColor,
                         mini: true,
                       ),
-                      Text(
+                      const Text(
                         'Logout',
                         style: TextStyle(
                             color: AppColors.primaryText, fontSize: 12),
@@ -298,7 +272,7 @@ class ManagePage extends StatelessWidget {
     });
   }
 
-  /// 更多工具
+  /// More functional
   Widget _buildMoreFunc(BuildContext context) {
     return Consumer<MyManageModel>(builder: (context, model, child) {
         return Container(
@@ -315,7 +289,7 @@ class ManagePage extends StatelessWidget {
             children: <Widget>[
               Container(
                 padding: EdgeInsets.only(top: 10),
-                child: LeftTitle(
+                child: const LeftTitle(
                   title: 'More Function',
                 ),
               ),
@@ -324,31 +298,6 @@ class ManagePage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Column(
-                      children: <Widget>[
-                        new FloatingActionButton(
-                          onPressed: () async {
-                            // add crops
-                            MyNavigator.push(AddCropPage());
-                          },
-                          child: Icon(
-                            Icons.add_business,
-                            color: Color(0xFF4A4A4A),
-                            size: 28,
-                          ),
-                          elevation: 0.0,
-                          highlightElevation: 0.0,
-                          backgroundColor: Colors.white,
-                          splashColor: AppColors.primaryColor,
-                          mini: true,
-                        ),
-                        Text(
-                          'Add Crops',
-                          style: TextStyle(
-                              color: AppColors.primaryText, fontSize: 12),
-                        ),
-                      ],
-                    ),
                   ],
                 ),
               ),

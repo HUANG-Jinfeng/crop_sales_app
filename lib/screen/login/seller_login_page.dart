@@ -36,6 +36,7 @@ class _SellerLoginFormState extends State<SellerLoginPage> {
   Future loginAction(BuildContext context) async {
     email = _unameController.text;
     password = _pwdController.text;
+    //isUserType = ;
 
     try {
       if (email != null && password != null) {

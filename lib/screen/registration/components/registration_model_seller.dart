@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 class SellerRegisterModel extends ChangeNotifier {
   final TelController = TextEditingController();
   final addressController = TextEditingController();
-  final categoryIDController = TextEditingController();
   final cityController = TextEditingController();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
@@ -20,7 +19,7 @@ class SellerRegisterModel extends ChangeNotifier {
 
   String? Tel;
   String? address;
-  String? category_id = '2';
+  String? category_id = '1';
   String? city;
   String? email;
   String? name;
@@ -35,8 +34,8 @@ class SellerRegisterModel extends ChangeNotifier {
 
   //String? crop_ids;
   String? date;
-  String? total_price;
-  String? total_quantity;
+  //String? total_price;
+  //String? total_quantity;
 
   bool isLoading = false;
 
@@ -61,7 +60,6 @@ class SellerRegisterModel extends ChangeNotifier {
   }
 
   void setCategory_id(String category_id) {
-    category_id = '1';
     this.category_id = category_id;
     notifyListeners();
   }
@@ -94,7 +92,7 @@ class SellerRegisterModel extends ChangeNotifier {
   Future signUp() async {
     this.Tel = TelController.text;
     this.address = addressController.text;
-    this.category_id = categoryIDController.text;
+    this.category_id = '1';
     this.city = cityController.text;
     this.email = emailController.text;
     this.name = nameController.text;
@@ -125,7 +123,7 @@ class SellerRegisterModel extends ChangeNotifier {
         });
         // Add User cart id in firestore.
         final docCart =
-            FirebaseFirestore.instance.collection('cart').doc('$email$uid');
+            FirebaseFirestore.instance.collection('crop').doc('$email$uid');
         DateTime now = new DateTime.now();
         await docCart.set(
           {
@@ -133,8 +131,8 @@ class SellerRegisterModel extends ChangeNotifier {
             'cart_id': '$email$uid',
             //'crop_ids': crop_ids,
             'date': now,
-            'total_price': total_price, //
-            'total_quantity': total_quantity, //
+            //'total_price': total_price, //
+            //'total_quantity': total_quantity, //
           },
         );
       }

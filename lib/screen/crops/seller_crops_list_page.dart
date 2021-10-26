@@ -1,18 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/components/my_loading.dart';
-import 'package:crop_sales_app/components/my_toast.dart';
-import 'package:crop_sales_app/screen/crops/components/crop_add_page.dart';
 import 'package:crop_sales_app/screen/crops/components/crop_class.dart';
 import 'package:crop_sales_app/screen/crops/components/crops_list_model.dart';
 import 'package:crop_sales_app/styles/colors.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:horizontal_data_table/refresh/pull_to_refresh/src/smart_refresher.dart';
 import 'package:provider/provider.dart';
 
-class CropListPage extends StatelessWidget {
-  const CropListPage({Key? key}) : super(key: key);
+class SellerCropListPage extends StatelessWidget {
+  const SellerCropListPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -163,23 +159,11 @@ class CropListPage extends StatelessWidget {
                                             side: BorderSide.none,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
-                                        onPressed: () => {
-                                          model.addCropToCart(
-                                              crop.crop_id,
-                                              crop.crop_name,
-                                              crop.description,
-                                              crop.image,
-                                              crop.price,
-                                              _counter,
-                                              crop.volume,
-                                          ),
-                                          model.addTotalPrice(
-                                              crop.crop_id, crop.price, _counter),
-                                        },
+                                        onPressed: () => {},
                                         color: AppColors.primaryColor,
                                         child: Center(
                                           child: Text(
-                                            'Add',
+                                            'Edit',
                                             style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 14,

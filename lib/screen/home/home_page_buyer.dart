@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:crop_sales_app/components/components.dart';
-import 'package:crop_sales_app/screen/crops/crops_list_page.dart';
+import 'package:crop_sales_app/screen/crops/buyer_crops_list_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:crop_sales_app/screen/home/store/home_page_provider.dart';
@@ -92,7 +92,7 @@ class _HomePageContainerState extends State<HomePageContainer> {
                     height: size.height - kNavigationBarHeight - 255,
                     margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
                     //padding: EdgeInsets.only(bottom: 10),
-                    child: CropListPage(),
+                    child: BuyerCropListPage(),
                   ),
                 ],
               ),
