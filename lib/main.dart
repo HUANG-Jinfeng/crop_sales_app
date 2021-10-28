@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:crop_sales_app/screen//login/seller_login_page.dart';
 import 'package:crop_sales_app/screen/main/initial_page.dart';
 import 'package:crop_sales_app/screen/main/main_page_seller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,38 +21,55 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  final uID = await FirebaseFirestore.instance
-      .collection('users')
-      .doc(FirebaseAuth.instance.currentUser!.uid)
-      .get();
-  final data = uID.data();
-  final String userType = data?['category_id'];
-
   // Determines if you are logged in.
   SharedPreferences prefs = await SharedPreferences.getInstance();
   bool isLogin = prefs.getBool('isLogin') ?? false;
   print('isLogin or not : ' + isLogin.toString());
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => MainProvider()),
-        ChangeNotifierProvider(create: (_) => ShopingCartGlobalProvider()),
-      ],
-      child: userType=='2' ? MyAppForBuyer(isLogin: isLogin,) : MyAppForSeller(isLogin: isLogin,),
-    ),
-  );
+  if (isLogin == false) {
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => MainProvider()),
+          ChangeNotifierProvider(create: (_) => ShopingCartGlobalProvider()),
+        ],
+        child: MyApp(isLogin: isLogin,),
+      ),
+    );
+  } else {
+    final uID = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    final data = uID.data();
+    final String userType = data?['category_id'];
+    print(userType);
+    runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (_) => MainProvider()),
+          ChangeNotifierProvider(create: (_) => ShopingCartGlobalProvider()),
+        ],
+        child: userType == '2'
+            ? MyAppForBuyer(
+                isLogin: isLogin,
+              )
+            : MyAppForSeller(
+                isLogin: isLogin,
+              ),
+      ),
+    );
+  }
   //
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
-    SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
 
-class MyAppForBuyer extends StatelessWidget {
+class MyApp extends StatelessWidget {
   final isLogin;
-  const MyAppForBuyer({Key? key, this.isLogin}) : super(key: key);
-
+  const MyApp({Key? key, this.isLogin}) : super(key: key);
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -75,9 +91,45 @@ class MyAppForBuyer extends StatelessWidget {
             return locale;
           },
           theme: ThemeData(
-            primarySwatch: Colors.purple,
             primaryColor: AppColors.primaryColor,
-            accentColor: AppColors.primaryColorAccent,
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+                .copyWith(secondary: AppColors.primaryColorAccent),
+          ),
+          debugShowCheckedModeBanner: false,
+          home: InitialPage(),
+        ),
+      ),
+    );
+  }
+}
+
+class MyAppForBuyer extends StatelessWidget {
+  final isLogin;
+  const MyAppForBuyer({Key? key, this.isLogin}) : super(key: key);
+  // This widget is the root of your application.
+  @override
+  Widget build(BuildContext context) {
+    return OKToast(
+      child: RefreshConfiguration(
+        child: MaterialApp(
+          title: 'LTID',
+          localizationsDelegates: const [
+            RefreshLocalizations.delegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en'),
+            Locale('jp'),
+          ],
+          localeResolutionCallback:
+              (Locale? locale, Iterable<Locale> supportedLocales) {
+            return locale;
+          },
+          theme: ThemeData(
+            primaryColor: AppColors.primaryColor,
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+                .copyWith(secondary: AppColors.primaryColorAccent),
           ),
           debugShowCheckedModeBanner: false,
           home: isLogin ? BuyerMainPage() : InitialPage(),
@@ -86,8 +138,10 @@ class MyAppForBuyer extends StatelessWidget {
     );
   }
 }
+
 class MyAppForSeller extends StatelessWidget {
   final isLogin;
+
   const MyAppForSeller({Key? key, this.isLogin}) : super(key: key);
 
   // This widget is the root of your application.
@@ -111,9 +165,9 @@ class MyAppForSeller extends StatelessWidget {
             return locale;
           },
           theme: ThemeData(
-            primarySwatch: Colors.purple,
             primaryColor: AppColors.primaryColor,
-            accentColor: AppColors.primaryColorAccent,
+            colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.purple)
+                .copyWith(secondary: AppColors.primaryColorAccent),
           ),
           debugShowCheckedModeBanner: false,
           home: isLogin ? SellerMainPage() : InitialPage(),

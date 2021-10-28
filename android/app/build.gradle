@@ -27,9 +27,9 @@ apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 // Add the following line:
 apply plugin: 'com.google.gms.google-services'  // Google Services plugin
 
-def keystorePropertiesFile = rootProject.file("key.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+//def keystorePropertiesFile = rootProject.file("key.properties")
+//def keystoreProperties = new Properties()
+//keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
 android {
     compileSdkVersion 31
@@ -65,15 +65,17 @@ android {
         }
     }
 
-/*    buildTypes {
+    buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            shrinkResources false // 追加
+            minifyEnabled false // 追加
         }
-    }*/
+    }
 
-    buildTypes {
+/*    buildTypes {
         getByName("release") {
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type.
@@ -91,7 +93,7 @@ android {
                     "proguard-rules.pro"
             )
         }
-    }
+    }*/
 }
 
 flutter {
