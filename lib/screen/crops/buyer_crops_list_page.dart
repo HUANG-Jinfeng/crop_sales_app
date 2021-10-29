@@ -31,7 +31,7 @@ class BuyerCropListPage extends StatelessWidget {
                             children: <Widget>[
                               Container(
                                 height: 80.0,
-                                margin: EdgeInsets.only(
+                                margin: const EdgeInsets.only(
                                     left: 10.0,
                                     right: 10.0,
                                     top: 0.0,
@@ -64,7 +64,7 @@ class BuyerCropListPage extends StatelessWidget {
                                         crop.crop_name,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 18.0,
                                             fontWeight: FontWeight.bold,
                                             color: AppColors.primaryText),
@@ -79,7 +79,7 @@ class BuyerCropListPage extends StatelessWidget {
                                         crop.description,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 11.0,
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.primaryGreyText),
@@ -93,20 +93,20 @@ class BuyerCropListPage extends StatelessWidget {
                                       child: RichText(
                                         text: TextSpan(
                                           text: "Inventory: ",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: AppColors.primaryText,
                                             fontSize: 12,
                                             fontWeight: FontWeight.w400,
                                           ),
                                           children: <TextSpan>[
                                             TextSpan(
-                                              text: crop.volume,
-                                              style: TextStyle(
+                                              text: crop.volume.toString(),
+                                              style: const TextStyle(
                                                 color: Color(0xFF121212),
                                                 fontSize: 12,
                                                 fontWeight: FontWeight.w400,
                                               ),
-                                              children: <TextSpan>[
+                                              children: const <TextSpan>[
                                                 TextSpan(
                                                   text: " Kg",
                                                   style: TextStyle(
@@ -129,15 +129,15 @@ class BuyerCropListPage extends StatelessWidget {
                                       child: RichText(
                                         text: TextSpan(
                                           text: 'PHP ',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: AppColors.priceColor,
                                             fontSize: 16,
                                             fontWeight: FontWeight.w600,
                                           ),
                                           children: [
                                             TextSpan(
-                                              text: crop.price,
-                                              style: TextStyle(
+                                              text: crop.price.toString(),
+                                              style: const TextStyle(
                                                 color: AppColors.priceColor,
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w600,
@@ -155,7 +155,7 @@ class BuyerCropListPage extends StatelessWidget {
                                       child: FlatButton(
                                         minWidth: 5,
                                         height: 20,
-                                        shape: RoundedRectangleBorder(
+                                        shape: const RoundedRectangleBorder(
                                             side: BorderSide.none,
                                             borderRadius: BorderRadius.all(
                                                 Radius.circular(10))),
@@ -173,7 +173,7 @@ class BuyerCropListPage extends StatelessWidget {
                                               crop.crop_id, crop.price, _counter),
                                         },
                                         color: AppColors.primaryColor,
-                                        child: Center(
+                                        child: const Center(
                                           child: Text(
                                             'Add',
                                             style: TextStyle(

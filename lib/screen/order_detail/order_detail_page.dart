@@ -111,7 +111,7 @@ class OrderDetailContainer extends StatelessWidget {
             //top: 10,
             child: MyButton(
               text: 'Pay immediately',
-              handleOk: () => MyNavigator.push(PayPage(orderId: "id")),
+              handleOk: () => {},
             ),
           ),
         ],

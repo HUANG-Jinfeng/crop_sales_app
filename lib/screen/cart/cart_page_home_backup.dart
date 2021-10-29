@@ -136,7 +136,7 @@ class CartContainer extends StatelessWidget {
                                               ),
                                               children: <TextSpan>[
                                                 TextSpan(
-                                                  text: cart.crop_maxBuyCount,
+                                                  text: cart.crop_maxBuyCount.toString(),
                                                   style: TextStyle(
                                                     color: Color(0xFF121212),
                                                     fontSize: 12,
@@ -218,8 +218,8 @@ class CartContainer extends StatelessWidget {
                                                   textKey.currentState!
                                                       .onPressed(cart
                                                           .single_quantity); //其实这个count值已经改变了 但是没有重绘所以我们看到的只是我们定义的初始值
-                                                  var totalPrice = int.parse(
-                                                          cart.single_price) *
+                                                  var totalPrice =
+                                                          cart.single_price *
                                                       cart.single_quantity;
                                                   model
                                                       .eachCropTotalQuantityAndPrice(
@@ -246,13 +246,13 @@ class CartContainer extends StatelessWidget {
                                               onPressed: () {
                                                 if (cart.single_quantity <
                                                     int.parse(cart
-                                                        .crop_maxBuyCount)) {
+                                                        .crop_maxBuyCount.toString())) {
                                                   cart.single_quantity++;
                                                   textKey.currentState!
                                                       .onPressed(
                                                           cart.single_quantity);
-                                                  var totalPrice = int.parse(
-                                                          cart.single_price) *
+                                                  var totalPrice =
+                                                          cart.single_price *
                                                       cart.single_quantity;
                                                   model
                                                       .eachCropTotalQuantityAndPrice(
@@ -266,7 +266,7 @@ class CartContainer extends StatelessWidget {
                                                 } else if (cart
                                                         .single_quantity ==
                                                     int.parse(cart
-                                                        .crop_maxBuyCount)) {
+                                                        .crop_maxBuyCount.toString())) {
                                                   MyToast.show(
                                                       'Already the largest inventory!');
                                                 };

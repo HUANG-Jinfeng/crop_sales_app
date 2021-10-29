@@ -26,6 +26,7 @@ class _BuyerLoginFormState extends State<BuyerLoginPage> {
 
   String? email;
   String? password;
+  String? useType;
   bool isLoading = false;
 
   void _removeEmail() {_unameController.clear();}

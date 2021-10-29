@@ -20,6 +20,6 @@ class Crop {
   String description;
   String image;
   String memo;
-  String price;
-  String volume;
+  int price;
+  int volume;
 }

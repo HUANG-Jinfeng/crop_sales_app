@@ -14,9 +14,9 @@ class AddCropModel extends ChangeNotifier {
   String? description;
   File? imageFile;
   String? memo;
-  String? price;
+  int? price;
   String? uid;
-  String? volume;
+  int? volume;
 
   bool isLoading = false;
 
@@ -36,10 +36,10 @@ class AddCropModel extends ChangeNotifier {
     if (crop_name == null || description == "") {
       throw 'The Description cannot be empty.';
     }
-    if (price == null || price!.isEmpty) {
+    if (price == null || price!.isNaN) {
       throw 'The Price cannot be empty.';
     }
-    if (volume == null || volume!.isEmpty) {
+    if (volume == null || price!.isNaN) {
       throw 'The Volume cannot be empty.';
     }
 
@@ -56,8 +56,7 @@ class AddCropModel extends ChangeNotifier {
       imgURL = await task.ref.getDownloadURL();
     }
 
-    DateTime now = new DateTime.now();
-    // print("当前时间：$now");
+    DateTime now = DateTime.now();
     // firestore ni add
     await doc.set(
       {

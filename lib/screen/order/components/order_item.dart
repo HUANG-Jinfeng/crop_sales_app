@@ -1,9 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/components/components.dart';
 import 'package:crop_sales_app/screen/order_detail/order_detail_page.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crop_sales_app/screen/pay/pay_page.dart';
-//import 'package:crop_sales_app/screen/supplier/supplier_page.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
 
@@ -11,29 +12,61 @@ class OrderItem extends StatelessWidget {
   final orderItemData;
   const OrderItem({Key? key, this.orderItemData}) : super(key: key);
 
+  Future<void> getOrderIDs () async {
+    final uID = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(FirebaseAuth.instance.currentUser!.uid)
+        .get();
+    final data = uID.data();
+    final String uidCartID = data?['cart_id'];
+    final QuerySnapshot docOrderIDs = await FirebaseFirestore.instance
+        .collection('orders')
+        .doc(uidCartID)
+        .collection('orderIDs')
+        .get();
+    final List orderIDlist =
+    docOrderIDs.docs.map((DocumentSnapshot document) {
+      Map<String, dynamic> orderIDlist =
+      document.data() as Map<String, dynamic>;
+    }).toList();
+
+    print(orderIDlist.length);
+    /*FirebaseFirestore.instance
+        .collection('orders')
+        .doc(uidCartID)
+        .collection('orderIDs')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        print(doc.id);
+      });
+    });*/
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
+      margin: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(5),
       ),
       child: Column(
         children: <Widget>[
-              Head(), // 头部
+              const Head(), // 头部
             ] +
             //控制显示的商品列表个数
             [1].map<Widget>((item) {
-              return Content();
+              return const Content();
             }).toList() +
-            [Bottom()],
+            [const Bottom()] +
+        [IconButton(onPressed: () {getOrderIDs();}, icon: Icon(Icons.add))],
       ),
     );
   }
 }
 
-///顶部供应商
+///顶部Order ID
 class Head extends StatelessWidget {
   const Head({
     Key? key,
@@ -43,10 +76,9 @@ class Head extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
-      onTap: () => MyNavigator.push(OrderDetailPage(orderId: "id")),
-      //onTap: () => MyNavigator.push(SupplierPage(supplierId: "supplierId")),
+      onTap: () => MyNavigator.push(const OrderDetailPage(orderId: "id")),
       child: Container(
-        padding: EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(15.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,24 +89,24 @@ class Head extends StatelessWidget {
                   child: Image.asset('assets/images/home/shop.png',
                       width: 20.0, height: 20.0),
                 ),
-                SizedBox(width: 10.5),
-                Text(
-                  'Famer A',
+                const SizedBox(width: 10.5),
+                const Text(
+                  'Order ID: ',
                   style: TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w400,
                     color: Color(0xFF121212),
                   ),
                 ),
-                SizedBox(width: 10.5),
-                Icon(
+                const SizedBox(width: 10.5),
+                const Icon(
                   Icons.keyboard_arrow_right,
                   color: Color(0xFF4A4A4A),
                   size: 20.0,
                 ),
               ],
             ),
-            Text(
+            const Text(
               'Paying',
               style: TextStyle(
                 fontSize: 14.0,
@@ -99,9 +131,9 @@ class Content extends StatelessWidget {
       onTap: () => MyNavigator.push(OrderDetailPage(orderId: "id")),
       child: Container(
         height: 80.0,
-        margin: EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 0),
+        margin: const EdgeInsets.only(left: 15, right: 15, top: 15, bottom: 0),
         decoration: BoxDecoration(
-          color: Color(0xFFF7F7F7),
+          color: const Color(0xFFF7F7F7),
           borderRadius: BorderRadius.circular(5),
         ),
         child: Stack(
@@ -121,7 +153,7 @@ class Content extends StatelessWidget {
                 ),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 90,
               top: 13,
               child: Text(
@@ -134,7 +166,7 @@ class Content extends StatelessWidget {
                     color: Color(0xFF17191A)),
               ),
             ),
-            Positioned(
+            const Positioned(
               left: 90,
               top: 35,
               right: 15,
@@ -153,12 +185,12 @@ class Content extends StatelessWidget {
               left: 90,
               top: 55.0,
               child: Container(
-                padding: EdgeInsets.symmetric(vertical: 0.5, horizontal: 5),
+                padding: const EdgeInsets.symmetric(vertical: 0.5, horizontal: 5),
                 decoration: BoxDecoration(
                   color: AppColors.primaryColor,
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                child: Text(
+                child: const Text(
                   'Price',
                   style: TextStyle(
                     color: Colors.white,
@@ -173,7 +205,7 @@ class Content extends StatelessWidget {
               left: 145,
               top: 55.0,
               child: RichText(
-                text: TextSpan(
+                text: const TextSpan(
                     text: 'PHP ',
                     style: TextStyle(
                       color: Color(0xFF121212),
@@ -192,7 +224,7 @@ class Content extends StatelessWidget {
                     ]),
               ),
             ),
-            Positioned(
+            const Positioned(
               // 价格
               right: 20,
               top: 51.0,
@@ -228,8 +260,8 @@ class Bottom extends StatelessWidget {
                 children: <Widget>[
                   Image.asset('assets/images/order/querendingdan.png'),
                   Container(
-                    padding: EdgeInsets.only(bottom: 0.0, top: 20),
-                    child: Text(
+                    padding: const EdgeInsets.only(bottom: 0.0, top: 20),
+                    child: const Text(
                       'Cancel order',
                       style:
                           TextStyle(color: Color(0xFF4A4A4A), fontSize: 14.0),
@@ -256,7 +288,7 @@ class Bottom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 15, left: 15, right: 15),
+      margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
       // color: Colors.red,
       child: Column(
         children: <Widget>[
@@ -264,7 +296,7 @@ class Bottom extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                     text: 'There are',
                     style: TextStyle(
                       color: Color(0xFF4A4A4A),
@@ -291,7 +323,7 @@ class Bottom extends StatelessWidget {
                     ]),
               ),
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                     text: 'Total：',
                     style: TextStyle(
                       color: Color(0xFF4A4A4A),
@@ -317,13 +349,13 @@ class Bottom extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 OutlineButton(
-                  shape: RoundedRectangleBorder(
+                  shape: const RoundedRectangleBorder(
                       side: BorderSide.none,
                       borderRadius: BorderRadius.all(Radius.circular(50))),
                   onPressed: () => _showCancelDialog(context),
                   splashColor: AppColors.splashColor,
                   highlightElevation: 5.0,
-                  child: Center(
+                  child: const Center(
                     child: Text(
                       'Cancel order',
                       style: TextStyle(
@@ -338,12 +370,12 @@ class Bottom extends StatelessWidget {
                   decoration: BoxDecoration(),
                   child: FlatButton(
                     //minWidth: 100,
-                    shape: RoundedRectangleBorder(
+                    shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(50))),
-                    onPressed: () => MyNavigator.push(PayPage(orderId: "id")),
+                    onPressed: () => {},
                     color: AppColors.primaryColor,
-                    child: Center(
+                    child: const Center(
                       child: Text(
                         'Pay immediately',
                         style: TextStyle(

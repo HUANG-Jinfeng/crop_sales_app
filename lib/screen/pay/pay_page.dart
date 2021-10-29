@@ -10,8 +10,10 @@ import 'components/top.dart';
 
 class PayPage extends StatelessWidget {
   final String orderId;
+  final int totalPrice;
 
-  const PayPage({Key? key, required this.orderId}) : super(key: key);
+  const PayPage({Key? key, required this.orderId, required this.totalPrice})
+      : super(key: key);
 
   Future<bool> _showCancelDialog(BuildContext context) async {
     final result = await showDialog<int>(
@@ -25,10 +27,11 @@ class PayPage extends StatelessWidget {
                 children: <Widget>[
                   Image.asset('assets/images/order/querendingdan.png'),
                   Container(
-                    padding: EdgeInsets.only(bottom: 0.0, top: 20),
+                    padding: const EdgeInsets.only(bottom: 0.0, top: 20),
                     child: Text(
                       'Confirm to give up payment?',
-                      style: TextStyle(color: Color(0xFF4A4A4A), fontSize: 14.0),
+                      style:
+                          TextStyle(color: Color(0xFF4A4A4A), fontSize: 14.0),
                     ),
                   ),
                 ],
@@ -52,16 +55,11 @@ class PayPage extends StatelessWidget {
         return isCancelPay;
       },
       title: 'Payment',
-      body: PayPageContainer(),
+      body: PayPageContainer(context,orderId,totalPrice),
     );
   }
-}
 
-class PayPageContainer extends StatelessWidget {
-  const PayPageContainer({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  PayPageContainer(BuildContext context, String orderId, int totalPrice) {
     return Container(
       color: Color(0xFFF7F7F7),
       child: Stack(
@@ -69,12 +67,13 @@ class PayPageContainer extends StatelessWidget {
           Container(
             width: double.infinity,
             height: double.infinity,
-            margin: EdgeInsets.only(bottom: 70 + MediaQuery.of(context).padding.bottom),
+            margin: EdgeInsets.only(
+                bottom: 70 + MediaQuery.of(context).padding.bottom),
             child: SingleChildScrollView(
               physics: AlwaysScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[Top(), Middle()],
+                children: <Widget>[Top(orderId: orderId,totalPrice: totalPrice,), Middle()],
               ),
             ),
           ),
@@ -91,47 +90,46 @@ class PayPageContainer extends StatelessWidget {
       ),
     );
   }
-
-  // Payment successful
   void _showSuccessDialog(BuildContext context) async {
     MyDialog.showLoading('Paying', barrier: true);
     await Future.delayed(Duration(seconds: 2), () {});
     MyDialog.hideLoading();
 
     showDialog(
-        context: context,
-        barrierDismissible: false,
-        builder: (_) {
-          return CustomDialog(
-            content: Center(
-              child: Column(
-                children: <Widget>[
-                  Image.asset('assets/images/confirm_order/dingdanchenggong.png'),
-                  Container(
-                    padding: EdgeInsets.only(bottom: 0.0, top: 10),
-                    child: Text(
-                      'Payment successful',
-                      style: TextStyle(color: Color(0xFF4A4A4A), fontSize: 14.0),
-                    ),
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return CustomDialog(
+          content: Center(
+            child: Column(
+              children: <Widget>[
+                Image.asset('assets/images/confirm_order/dingdanchenggong.png'),
+                Container(
+                  padding: EdgeInsets.only(bottom: 0.0, top: 10),
+                  child: Text(
+                    'Payment successful',
+                    style: TextStyle(color: Color(0xFF4A4A4A), fontSize: 14.0),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            confirmContent: 'CheckOrder',
-            confirmTextColor: AppColors.buyNow1,
-            cancelContent: 'Purchase',
-            isCancel: true,
-            confirmCallback: () {
-              // check order
-              final mainProvder = Provider.of<MainProvider>(context, listen: false);
-              mainProvder.setTabBarSelectedIndex = 1;
-            },
-            dismissCallback: () {
-              // continue to shoping
-              MyNavigator.pushAndRemove(BuyerHomePage());
-            },
-          );
-        }
+          ),
+          confirmContent: 'CheckOrder',
+          confirmTextColor: AppColors.buyNow1,
+          cancelContent: 'Purchase',
+          isCancel: true,
+          confirmCallback: () {
+            // check order
+            final mainProvder =
+            Provider.of<MainProvider>(context, listen: false);
+            mainProvder.setTabBarSelectedIndex = 1;
+          },
+          dismissCallback: () {
+            // continue to shoping
+            MyNavigator.pushAndRemove(BuyerHomePage());
+          },
         );
+      },
+    );
   }
 }

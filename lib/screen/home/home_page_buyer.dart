@@ -26,10 +26,10 @@ class _BuyerHomePageState extends State<BuyerHomePage>
 
       child: BaseScaffold(
         leadType: AppBarBackType.None,
-        actions: <Widget>[AppBarShopCartIconButton()],
+        actions: const <Widget>[AppBarShopCartIconButton()],
         title: 'Home',
         centerTitle: true,
-        body: HomePageContainer(),
+        body: const HomePageContainer(),
       ),
     );
   }
@@ -40,6 +40,8 @@ class _BuyerHomePageState extends State<BuyerHomePage>
 
 //old
 class HomePageContainer extends StatefulWidget {
+  const HomePageContainer({Key? key}) : super(key: key);
+
   @override
   _HomePageContainerState createState() => _HomePageContainerState();
 }
@@ -77,22 +79,21 @@ class _HomePageContainerState extends State<HomePageContainer> {
                 children: <Widget>[
                   Container(
                     height: 44,
-                    margin: EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
-                    padding: EdgeInsets.only(left: 15),
-                    decoration: BoxDecoration(
+                    margin: const EdgeInsets.only(left: 15, right: 15, top: 10, bottom: 10),
+                    padding: const EdgeInsets.only(left: 15),
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(Radius.circular(10)),
                     ),
-                    child: LeftTitle(
+                    child: const LeftTitle(
                       tipColor: AppColors.primaryColor,
                       title: 'Crops List',
                     ),
                   ),
                   Container(
                     height: size.height - kNavigationBarHeight - 255,
-                    margin: EdgeInsets.only(left: 15, right: 15, bottom: 15),
-                    //padding: EdgeInsets.only(bottom: 10),
-                    child: BuyerCropListPage(),
+                    margin: const EdgeInsets.only(left: 15, right: 15, bottom: 15),
+                    child: const BuyerCropListPage(),
                   ),
                 ],
               ),

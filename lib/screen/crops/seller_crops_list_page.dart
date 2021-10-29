@@ -100,7 +100,7 @@ class SellerCropListPage extends StatelessWidget {
                                           ),
                                           children: <TextSpan>[
                                             TextSpan(
-                                              text: crop.volume,
+                                              text: crop.volume.toString(),
                                               style: TextStyle(
                                                 color: Color(0xFF121212),
                                                 fontSize: 12,
@@ -136,7 +136,7 @@ class SellerCropListPage extends StatelessWidget {
                                           ),
                                           children: [
                                             TextSpan(
-                                              text: crop.price,
+                                              text: crop.price.toString(),
                                               style: TextStyle(
                                                 color: AppColors.priceColor,
                                                 fontSize: 16,

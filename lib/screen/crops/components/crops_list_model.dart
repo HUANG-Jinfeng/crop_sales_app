@@ -16,16 +16,16 @@ class CropListModel extends ChangeNotifier {
 
     final List<Crop> crops = snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-      final String crop_category_id = data['crop_category_id'];
-      final String crop_id = data['crop_id'];
-      final String crop_name = data['crop_name'];
+      final String cropCategoryId = data['crop_category_id'];
+      final String cropId = data['crop_id'];
+      final String cropName = data['crop_name'];
       final Timestamp date = data['date'];
       final String description = data['description'];
       final String image = data['image'];
       final String memo = data['memo'];
-      final String price = data['price'];
-      final String volume = data['volume'];
-      return Crop(crop_category_id, crop_id, crop_name, date, description,
+      final int price = data['price'];
+      final int volume = data['volume'];
+      return Crop(cropCategoryId, cropId, cropName, date, description,
           image, memo, price, volume);
     }).toList();
 
@@ -39,7 +39,7 @@ class CropListModel extends ChangeNotifier {
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
     final data = uID.data();
-    final String uid_cartID = data?['cart_id'];
+    final String uidCartID = data?['cart_id'];
     int check = 0;
 
     /*FirebaseFirestore.instance
@@ -61,7 +61,7 @@ class CropListModel extends ChangeNotifier {
     final result =
     await FirebaseFirestore.instance
         .collection('cart')
-        .doc(uid_cartID)
+        .doc(uidCartID)
         .collection('crop_ids')
         .doc(id)
         .get();
@@ -76,17 +76,16 @@ class CropListModel extends ChangeNotifier {
 
   Future addCropToCart(
       id, name, description, url, price, quantity, total) async {
-    final uid_cartID = await FirebaseFirestore.instance
+    final uidCartID = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    final data = uid_cartID.data();
-    final String uid_cropID = data?['cart_id'];
+    final data = uidCartID.data();
+    final String uidCropID = data?['cart_id'];
 
-    //quantity = quantity+2;
     final doc = FirebaseFirestore.instance
         .collection('cart')
-        .doc(uid_cropID)
+        .doc(uidCropID)
         .collection('crop_ids')
         .doc(id);
     await doc.set({
@@ -97,49 +96,47 @@ class CropListModel extends ChangeNotifier {
       'price': price,
       'quantity': quantity,
       'maxBuyCount': total,
-      'isCollect': true,
+      //'isCollect': true,
     });
-
     MyToast.show('Added to cart!');
   }
 
   String? PRICE;
   String? QUANTITY;
-
   Future addTotalPrice(id, price, _counter) async {
-    final uid_cartID = await FirebaseFirestore.instance
+    final uidCartID = await FirebaseFirestore.instance
         .collection('users')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .get();
-    final data = uid_cartID.data();
-    final String uid_cropID = data?['cart_id'];
+    final data = uidCartID.data();
+    final String uidCropID = data?['cart_id'];
 
     final totalPrice = await FirebaseFirestore.instance
         .collection('cart')
-        .doc(uid_cropID)
+        .doc(uidCropID)
         .get();
-    final cartdata = totalPrice.data();
-    PRICE = cartdata?['total_price']; //print(PRICE);
-    QUANTITY = cartdata?['total_quantity']; //print(QUANTITY);
+    final cartData = totalPrice.data();
+    PRICE = cartData?['total_price']; //print(PRICE);
+    QUANTITY = cartData?['total_quantity']; //print(QUANTITY);
 
-    var a = int.parse(PRICE!);
-    num b = int.parse(QUANTITY!);
+    var a = PRICE!;
+    var b = QUANTITY!;
     if (a == 0) {
-      a = int.parse(price);
+      a = price;
       b = _counter;
       await FirebaseFirestore.instance
           .collection('cart')
-          .doc(uid_cropID)
+          .doc(uidCropID)
           .update({
         'total_price': a.toString(),
         'total_quantity': b.toString(),
       });
     } else {
-      a = a + int.parse(price);
+      a = a + price;
       b = b + _counter;
       await FirebaseFirestore.instance
           .collection('cart')
-          .doc(uid_cropID)
+          .doc(uidCropID)
           .update({
         'total_price': a.toString(),
         'total_quantity': b.toString(),

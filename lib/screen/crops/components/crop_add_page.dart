@@ -25,7 +25,7 @@ class AddCropPage extends StatelessWidget {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           height: 15,
                         ),
                         GestureDetector(
@@ -44,69 +44,69 @@ class AddCropPage extends StatelessWidget {
                           },
                         ),
                         TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Crop name*',
                           ),
                           onChanged: (text) {
                             model.crop_name = text;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Category*',
                           ),
                           onChanged: (text) {
                             model.crop_category_id = text;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Price (in PHP/KG)',
                           ),
                           onChanged: (text) {
-                            model.price = text;
+                            model.price = int.parse(text);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Description*',
                           ),
                           onChanged: (text) {
                             model.description = text;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Volume*',
                           ),
                           onChanged: (text) {
-                            model.volume = text;
+                            model.volume = int.parse(text);
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         TextField(
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: 'Memo*',
                           ),
                           onChanged: (text) {
                             model.memo = text;
                           },
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 8,
                         ),
                         ElevatedButton(
@@ -128,7 +128,7 @@ class AddCropPage extends StatelessWidget {
                               model.endLoading();
                             }
                           },
-                          child: Text('Save Crop'),
+                          child: const Text('Save Crop'),
                         ),
                       ],
                     ),
@@ -136,7 +136,7 @@ class AddCropPage extends StatelessWidget {
                   if (model.isLoading)
                     Container(
                       color: Colors.black54,
-                      child: Center(
+                      child: const Center(
                         child: CircularProgressIndicator(),
                       ),
                     ),
@@ -149,6 +149,3 @@ class AddCropPage extends StatelessWidget {
     );
   }
 }
-
-
-//child: SingleChildScrollView()

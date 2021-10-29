@@ -14,7 +14,6 @@ class BuyerRegisterModel extends ChangeNotifier {
   final cityController = TextEditingController();
   final emailController = TextEditingController();
   final nameController = TextEditingController();
-
   //final uidController = TextEditingController();
   final passwordController = TextEditingController();
 
@@ -24,7 +23,6 @@ class BuyerRegisterModel extends ChangeNotifier {
   String? city;
   String? email;
   String? name;
-
   //String? uid;
   String? password;
 
@@ -32,7 +30,6 @@ class BuyerRegisterModel extends ChangeNotifier {
   //List<Cart>? cart;
   String? uid;
   String? cart_id;
-
   //String? crop_ids;
   String? date;
   String? total_price = '0';
@@ -125,7 +122,7 @@ class BuyerRegisterModel extends ChangeNotifier {
         // Add User cart id in firestore.
         final docCart =
             FirebaseFirestore.instance.collection('cart').doc('$email$uid');
-        DateTime now = new DateTime.now();
+        DateTime now = DateTime.now();
         await docCart.set(
           {
             'uid': uid,

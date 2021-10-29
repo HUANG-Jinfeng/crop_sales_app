@@ -3,15 +3,14 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/components/my_toast.dart';
 import 'package:crop_sales_app/screen/crops/components/crop_class.dart';
+import 'package:crop_sales_app/screen/order/components/order_list_class.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import 'cart_list_class.dart';
-
-class CartListModel extends ChangeNotifier {
-  List<CartCropDetial>? carts;
+class OrderListModel extends ChangeNotifier {
+  List<OrderDetail>? carts;
 
   //String? uid;
   //String? cart_id;
@@ -30,6 +29,36 @@ class CartListModel extends ChangeNotifier {
   void endLoading() {
     isLoading = false;
     notifyListeners();
+  }
+
+  String? uid;
+  String? order_id;
+  String? order_state;
+  bool? isPay;
+  String? isDate;
+  int? order_total_quantity;
+  int? order_total_price;
+  Future makeAOrderIDs() async {
+    final uID =
+    await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
+    final data = uID.data();
+    final String uidCartID = data?['cart_id'];
+    print(uidCartID);
+
+    final docOrder =
+    FirebaseFirestore.instance.collection('orders').doc('$uidCartID');
+    DateTime now = DateTime.now();
+    await docOrder.set(
+        {
+          'uid': uID,
+          'order_id': '00001',
+          'order_state': 'Paying',
+          'isPay': false,
+          'isDate': now,
+          'order_total_quantity': 10, //
+          'order_total_price': 20000, //
+        }
+    );
   }
 
   String? PRICE;
@@ -93,15 +122,15 @@ class CartListModel extends ChangeNotifier {
     });
   }
 
-  void fetchCartCropList() async {
+  /*void fetchCartCropList() async {
     final uID =
     await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).get();
     final data = uID.data();
-    final String uid_cartID = data?['cart_id'];
-    print(uid_cartID);
+    final String uidCartID = data?['cart_id'];
+    print(uidCartID);
 
     final QuerySnapshot snapshot =
-    await FirebaseFirestore.instance.collection('cart').doc(uid_cartID).collection('crop_ids').get();
+    await FirebaseFirestore.instance.collection('cart').doc(uidCartID).collection('crop_ids').get();
 
     final List<CartCropDetial> carts = snapshot.docs.map((DocumentSnapshot document) {
       Map<String, dynamic> cartListData = document.data() as Map<String, dynamic>;
@@ -114,8 +143,8 @@ class CartListModel extends ChangeNotifier {
       final int price = cartListData['price'];
       return CartCropDetial(id,name,desc,url,maxcount,quantity,price);
     }).toList();
-    
+
     this.carts = carts;
     notifyListeners();
-  }
+  }*/
 }

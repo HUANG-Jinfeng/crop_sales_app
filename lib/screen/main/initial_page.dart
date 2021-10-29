@@ -12,7 +12,7 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialFormState extends State<InitialPage> {
-  GlobalKey _formKey = GlobalKey<FormState>();
+  final GlobalKey _formKey = GlobalKey<FormState>();
 
   @override
   void _LoginPage(BuildContext context, choose) async {
@@ -46,10 +46,7 @@ class _InitialFormState extends State<InitialPage> {
         behavior: HitTestBehavior.translucent,
         onTap: () => FocusScope.of(context).requestFocus(FocusNode()),
         child: Container(
-          height: MediaQuery
-              .of(context)
-              .size
-              .height,
+          height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.symmetric(vertical: 0.0, horizontal: 30.0),
           child: Form(
             autovalidateMode: AutovalidateMode.disabled,
@@ -62,11 +59,11 @@ class _InitialFormState extends State<InitialPage> {
                       .size
                       .height * 0.25,
                   child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center, children: [
+                      mainAxisAlignment: MainAxisAlignment.center, children: const [
                     Image(
                       image: AssetImage("assets/images/logo.png"),
-                      width: 150,
-                      height: 150,
+                      width: 130,
+                      height: 130,
                       fit: BoxFit.fill,
                     ),
                     SizedBox(
@@ -75,25 +72,26 @@ class _InitialFormState extends State<InitialPage> {
                     Text(
                       'Long Term Industrial Development',
                       style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500,
                         color: AppColors.primaryColor,
                       ),
                     ),
                   ]),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 100,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: MyButton(
                     text: 'Seller Login',
                     handleOk: () => _LoginPage(context, 1),
                   ),
                 ),
+                const SizedBox(height: 10,),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 10),
+                  padding: const EdgeInsets.symmetric(vertical: 10),
                   child: MyButton(
                     text: 'Buyer Login',
                     handleOk: () => _LoginPage(context, 2),

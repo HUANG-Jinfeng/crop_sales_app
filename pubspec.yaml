@@ -89,6 +89,7 @@ flutter:
   assets:
     # LOGO
     - assets/images/logo.png
+    - assets/images/LTID_logo_b.png
     # navigation
     - assets/images/nav/nav_back.png
     # tab bar

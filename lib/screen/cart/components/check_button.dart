@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-//void main() => runApp(new MyApp());
-
 class MyCheckButton extends StatefulWidget {
+  const MyCheckButton({Key? key}) : super(key: key);
+
   @override
-  TestMyAppState createState() => new TestMyAppState();
+  TestMyAppState createState() => TestMyAppState();
 }
 
 class TestMyAppState extends State<MyCheckButton> {
@@ -31,19 +31,18 @@ class TestMyAppState extends State<MyCheckButton> {
 
   @override
   Widget build(BuildContext context) {
-    _key= new GlobalKey<ScaffoldState>();
-    return new MaterialApp(
-        home: new Scaffold(
+    _key= GlobalKey<ScaffoldState>();
+    return MaterialApp(
+        home: Scaffold(
             key: _key,
-            appBar: new AppBar(title: new Text("test app")),
-            body: new Container(
+            appBar: AppBar(title: const Text("test app")),
+            body: Container(
                 alignment: Alignment.center,
-                child: new Container(
-                    child: new Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: buildButtons(),
-                    )))));
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: buildButtons(),
+                ))));
   }
 
   List<Widget> buildButtons() {
@@ -57,15 +56,15 @@ class TestMyAppState extends State<MyCheckButton> {
   }
 
   Widget _buildSpaceView(double _height) {
-    return new Container(height: _height);
+    return Container(height: _height);
   }
 
-  RaisedButton _buildButton1(int counter) {
-    return new RaisedButton(
-        padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-        child: new Text(
+  _buildButton1(int counter) {
+    return RaisedButton(
+        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+        child: Text(
           'count: ' + counter.toString(),
-          style: new TextStyle(
+          style: const TextStyle(
             fontSize: 18.0, //textsize
             color: Colors.white, // textcolor
           ),
@@ -77,12 +76,12 @@ class TestMyAppState extends State<MyCheckButton> {
         onPressed: _getBtn1ClickListener());
   }
 
-  RaisedButton _buildButton2() {
-    return new RaisedButton(
-        padding: new EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
-        child: new Text(
+  _buildButton2() {
+    return RaisedButton(
+        padding: const EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 10.0),
+        child: const Text(
           'click me',
-          style: new TextStyle(
+          style: TextStyle(
             fontSize: 18.0, //textsize
             color: Colors.white, // textcolor
           ),
@@ -105,8 +104,8 @@ class TestMyAppState extends State<MyCheckButton> {
       return null;
     } else {
       return () {
-        _key.currentState!.showSnackBar(new SnackBar(
-          content: new Text('Hello!'),
+        _key.currentState!.showSnackBar(const SnackBar(
+          content: Text('Hello!'),
         ));
       };
     }
