@@ -1,16 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crop_sales_app/components/components.dart';
-import 'package:crop_sales_app/screen/cart/components/cart_list_bottom.dart';
-import 'package:crop_sales_app/screen/cart/components/count_text.dart';
-import 'package:crop_sales_app/screen/order_detail/order_detail_page.dart';
 import 'package:crop_sales_app/screen/pay/pay_page.dart';
 import 'package:crop_sales_app/utils/my_navigator.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:crop_sales_app/styles/colors.dart';
 import 'package:provider/provider.dart';
 import 'components/order_list_class.dart';
+import 'components/order_list_model.dart';
 
 class OrderPageOrder extends StatefulWidget {
   const OrderPageOrder({Key? key}) : super(key: key);
@@ -22,127 +18,62 @@ class OrderPageOrder extends StatefulWidget {
 }
 
 class _CartPageHomeState extends State {
-  List<OrderDetail> orderCarts = [];
-  String uid = '';
-  String order_id = '';
-  String order_state = '';
-  bool isPay = false;
-  int order_total_quantity = 0;
-  int order_total_price = 0;
-
-  Future fetchOrderCropList() async {
-    final uID = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    final data = uID.data();
-    final String uidCartID = data?['cart_id'];
-
-    final orderIDs = await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(uidCartID)
-        .collection('orderIDs')
-        .get();
-    final QuerySnapshot snapshot = await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(uidCartID)
-        .collection('orderIDs')
-        .doc(orderIDs.docs.last.id)
-        .collection('OrderCropList')
-        .get();
-    final List<OrderDetail> crops =
-        snapshot.docs.map((DocumentSnapshot document) {
-      Map<String, dynamic> cartListData =
-          document.data() as Map<String, dynamic>;
-      final String id = cartListData['id'];
-      final String name = cartListData['name'];
-      final String desc = cartListData['description'];
-      final String url = cartListData['url'];
-      final int price = cartListData['price'];
-      final int quantity = cartListData['quantity'];
-      return OrderDetail(id, name, desc, url, price, quantity);
-    }).toList();
-    orderCarts = crops;
-    return crops;
-  }
-
-  Future fetchOrder() async {
-    final uID = await FirebaseFirestore.instance
-        .collection('users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    final data = uID.data();
-    final String uidCartID = data?['cart_id'];
-
-    final orderIDs = await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(uidCartID)
-        .collection('orderIDs')
-        .get();
-    final snapshot = await FirebaseFirestore.instance
-        .collection('orders')
-        .doc(uidCartID)
-        .collection('orderIDs')
-        .doc(orderIDs.docs.last.id)
-        .get();
-    final orderDetial = snapshot.data();
-    this.uid = orderDetial?['uid'];
-    this.order_id = orderDetial?['order_id'];
-    this.order_state = orderDetial?['order_state'];
-    this.isPay = orderDetial?['isPay'];
-    this.order_total_quantity = orderDetial?['order_total_quantity'];
-    this.order_total_price = orderDetial?['order_total_price'];
-    print('orderID: $order_id');
-  }
-
   @override
   void initState() {
-    fetchOrderCropList();
-    fetchOrder();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        children: <Widget>[
-          buildHead(order_id,order_state),
-          Container(
-            color: Colors.white,
-            height: orderCarts.length * 80,
-            child: buildListView(orderCarts),
-          ),
-          buildBottom(order_total_quantity,order_total_price),
-        ],
+    return ChangeNotifierProvider<OrderListModel>(
+      create: (_) => OrderListModel()..fetchOrderCropList(),
+      child: Container(
+        margin: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Consumer<OrderListModel>(
+          builder: (context, model, child) {
+            final List<OrderDetail>? orderCarts = model.orderCarts;
+            final Orders? orderInfo = model.orders;
+
+            if (orderCarts == null && orderInfo == null) {
+              return MyLoadingWidget();
+            } else {
+              return Column(
+                children: <Widget>[
+                  buildHead(orderInfo!.order_id, orderInfo.order_state),
+                  SizedBox(
+                    height: orderCarts!.length * 80,
+                    child: buildListView(orderCarts),
+                  ),
+                  buildBottom(
+                      orderInfo.order_id,
+                      orderInfo.order_total_quantity,
+                      orderInfo.order_total_price),
+                ],
+              );
+            }
+          },
+        ),
       ),
     );
   }
 
-  buildListView(List orderCarts) {
-    //fetchCartCropList();
-    //print(carts);
-    if (orderCarts.isEmpty) {
-      return MyLoadingWidget();
-      //return const OrderListPage();
-    } else if (orderCarts.isNotEmpty) {
-      return ListView.builder(
-        itemBuilder: (BuildContext context, int index) {
-          return TestListItemWidget(
-            crops: orderCarts[index],
-            key: GlobalObjectKey(index),
-          );
-        },
-        itemCount: orderCarts.length,
-      );
-    }
+  buildListView(orderCarts) {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) {
+        return TestListItemWidget(
+          crops: orderCarts[index],
+          key: GlobalObjectKey(index),
+        );
+      },
+      itemCount: orderCarts.length,
+    );
   }
-  buildHead(String orderId, String orderState) {
+
+  buildHead(orderID, orderState) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       //onTap: () => MyNavigator.push(const OrderDetailPage(orderId: "id")),
@@ -160,7 +91,7 @@ class _CartPageHomeState extends State {
                 ),
                 const SizedBox(width: 10.5),
                 Text(
-                  orderId,
+                  orderID,
                   style: const TextStyle(
                     fontSize: 14.0,
                     fontWeight: FontWeight.w400,
@@ -183,7 +114,8 @@ class _CartPageHomeState extends State {
       ),
     );
   }
-  buildBottom(int order_total_quantity, int order_total_price) {
+
+  buildBottom(String orderID, int orderTotalQuantity, int orderTotalPrice) {
     return Container(
       margin: const EdgeInsets.only(top: 20, left: 15, right: 15),
       //color: Colors.red,
@@ -202,7 +134,7 @@ class _CartPageHomeState extends State {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: order_total_quantity.toString(),
+                        text: orderTotalQuantity.toString(),
                         style: const TextStyle(
                           color: AppColors.buyNow1,
                           fontSize: 16,
@@ -229,7 +161,7 @@ class _CartPageHomeState extends State {
                     ),
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'PHP ${order_total_price.toString()}',
+                        text: 'PHP ${orderTotalPrice.toString()}',
                         style: const TextStyle(
                           color: AppColors.priceColor,
                           fontSize: 14,
@@ -270,8 +202,12 @@ class _CartPageHomeState extends State {
                     shape: const RoundedRectangleBorder(
                         side: BorderSide.none,
                         borderRadius: BorderRadius.all(Radius.circular(50))),
-                    onPressed: () =>
-                        MyNavigator.push(PayPage(orderId: order_id, totalPrice: order_total_price,)),
+                    onPressed: () => {
+                      MyNavigator.push(PayPage(
+                        orderId: orderID,
+                        totalPrice: orderTotalPrice,
+                      )),
+                    },
                     color: AppColors.primaryColor,
                     child: const Center(
                       child: Text(
@@ -292,6 +228,7 @@ class _CartPageHomeState extends State {
       ),
     );
   }
+
   void _showCancelDialog(BuildContext context) {
     showDialog(
       context: context,
@@ -318,7 +255,7 @@ class _CartPageHomeState extends State {
           isCancel: true,
           // confirmColor: Color(0xFFF5A623),
           confirmCallback: () {
-            /// 取消订单操作
+            ///
           },
           dismissCallback: () {
             return;
@@ -331,7 +268,9 @@ class _CartPageHomeState extends State {
 
 class TestListItemWidget extends StatefulWidget {
   final OrderDetail crops;
+
   const TestListItemWidget({required this.crops, Key? key}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() {
     return _ListItemState();
@@ -351,6 +290,7 @@ class _ListItemState extends State<TestListItemWidget> {
       ),
     );
   }
+
   buildContainer() {
     return Container(
       height: 80.0,

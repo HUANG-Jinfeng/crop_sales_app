@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 typedef onPressed_changestate();
 
 class ButtonWidget extends StatefulWidget {
-  //类变量,作为调用类时的参数
   onPressed_changestate onPressed;
   ButtonWidget({required this.onPressed});
 

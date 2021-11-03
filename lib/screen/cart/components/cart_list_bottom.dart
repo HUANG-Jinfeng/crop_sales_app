@@ -73,7 +73,7 @@ class CartListBottom extends StatelessWidget {
                 //onPressed: () => MyNavigator.push(const PayPage(orderId: "id")),
                 onPressed: () => {
                   makeAOrderIDs(),
-                  MyNavigator.push(const OrderPage())
+                  MyNavigator.push(OrderPage())
                 },
                 color: AppColors.primaryColor,
                 child: const Center(

@@ -28,7 +28,7 @@ class PayPage extends StatelessWidget {
                   Image.asset('assets/images/order/querendingdan.png'),
                   Container(
                     padding: const EdgeInsets.only(bottom: 0.0, top: 20),
-                    child: Text(
+                    child: const Text(
                       'Confirm to give up payment?',
                       style:
                           TextStyle(color: Color(0xFF4A4A4A), fontSize: 14.0),
@@ -114,7 +114,7 @@ class PayPage extends StatelessWidget {
               ],
             ),
           ),
-          confirmContent: 'CheckOrder',
+          //confirmContent: 'CheckOrder',
           confirmTextColor: AppColors.buyNow1,
           cancelContent: 'Purchase',
           isCancel: true,
@@ -126,7 +126,7 @@ class PayPage extends StatelessWidget {
           },
           dismissCallback: () {
             // continue to shoping
-            MyNavigator.pushAndRemove(BuyerHomePage());
+            MyNavigator.popToHome();
           },
         );
       },

@@ -5,7 +5,6 @@ import 'order_page_home.dart';
 
 class OrderPage extends StatefulWidget {
   const OrderPage({Key? key}) : super(key: key);
-
   @override
   _OrderPageState createState() => _OrderPageState();
 }
@@ -15,7 +14,6 @@ class _OrderPageState extends State<OrderPage> {
   @override
   void initState() {
     super.initState();
-    //getOrderIDs();
   }
 
   @override
@@ -35,11 +33,13 @@ class _OrderPageState extends State<OrderPage> {
 
   buildOrder() {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Expanded(
+          flex: 1,
           child: Container(
             color: AppColors.primaryBackground,
-            child: OrderPageOrder(),
+            child: const OrderPageOrder(),
           ),
         )
       ],

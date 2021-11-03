@@ -19,7 +19,6 @@ class TextWidgetState extends State<TextWidget> {
       child: Text(_text,style: Theme.of(context).textTheme.bodyText1, ),
     );
   }
-  //在TextWidget的onPressed中单独调用TextWidget的setState,刷新本控件.
   void onPressed(int count) {
     setState(() {
       _text = count.toString();
