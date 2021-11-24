@@ -32,7 +32,6 @@ class SellerManagePage extends StatelessWidget {
                   children: <Widget>[
                     _buildTop(context),
                     _buildFunc(context),
-                    //_buildMoreFunc(context),
                   ],
                 ),
               ),
@@ -95,19 +94,14 @@ class SellerManagePage extends StatelessWidget {
                               fontSize: 22,
                               fontWeight: FontWeight.w600),
                         ),
-                        /*Text('ID: ${model.uid}' ?? 'null',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 12)),*/
                         const Divider(height: 8),
                         Text(
                             'Tel: ${model.Tel}',
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 12)),
-                        //Divider(height: 5),
                         Text('Email: ${model.email}',
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 12)),
-                        //Divider(height: 5),
                         Text('City: ${model.city}',
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 12)),
@@ -118,7 +112,6 @@ class SellerManagePage extends StatelessWidget {
               ),
             ),
             Container(
-              //width: 0.0,
               height: 90,
               child: IconButton(
                 padding: const EdgeInsets.fromLTRB(0, 6, 10, 6),

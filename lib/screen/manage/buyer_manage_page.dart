@@ -38,7 +38,6 @@ class BuyerManagePage extends StatelessWidget {
               ),
             ]);
           }),
-          //color: AppColors.primaryBackground,
         ),
         backgroundColor: AppColors.primaryBackground,
       ),
@@ -95,19 +94,14 @@ class BuyerManagePage extends StatelessWidget {
                               fontSize: 22,
                               fontWeight: FontWeight.w600),
                         ),
-                        /*Text('ID: ${model.uid}' ?? 'null',
-                            style:
-                                TextStyle(color: Colors.white, fontSize: 12)),*/
                         const Divider(height: 8),
                         Text(
                             'Tel: ${model.Tel}',
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 12)),
-                        //Divider(height: 5),
                         Text('Email: ${model.email}',
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 12)),
-                        //Divider(height: 5),
                         Text('City: ${model.city}',
                             style:
                                 const TextStyle(color: Colors.white, fontSize: 12)),
@@ -130,10 +124,6 @@ class BuyerManagePage extends StatelessWidget {
                           Icons.settings_outlined,
                           color: Colors.white,
                         ),
-                        /*child: Image.asset(
-                            'assets/images/manage/guanli_ON.png',
-                            width: 22, height: 22,
-                        ),*/
                       ),
                     ],
                   ),
